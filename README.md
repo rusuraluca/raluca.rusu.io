@@ -8,7 +8,6 @@ Personal website.
 - **Styling:** Tailwind CSS v4 + CSS custom properties
 - **Content:** MDX with gray-matter, next-mdx-remote
 - **Code Highlighting:** Shiki via rehype-pretty-code
-- **PDF Generation:** @react-pdf/renderer
 - **Deployment:** Netlify
 
 ## Development
@@ -29,7 +28,6 @@ npm run build
 This generates:
 
 - Static pages for all routes
-- Resume PDF at `public/resume.pdf`
 - RSS feed at `/feed.xml`
 - Sitemap at `/sitemap.xml`
 
@@ -42,13 +40,12 @@ This generates:
 | articles | `/articles` |
 | experiments | `/experiments` |
 | projects | `/projects` |
-| resume | `/resume.pdf` |
+| resume | Google Doc (via nav link) |
 
 ## Content structure
 
 ```
 content/
-├── about/data.json    # Resume data (PDF + structured info)
 ├── articles/*.mdx     # Articles
 ├── projects/*.mdx     # Case studies
 └── experiments/*.mdx  # Experiments

@@ -1,6 +1,6 @@
 import type { ThemeRegistration } from "shiki";
 
-/** Syntax colors aligned with the site palette (see scripts/recolor-blog-icons.ts). */
+/** Syntax colors aligned with the site palette. */
 const palette = {
   light: {
     ink: "#1f2328",

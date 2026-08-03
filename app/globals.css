@@ -1260,20 +1260,12 @@ html[data-theme="dark"] .blog-page {
   --about-media-accent: #4361ee;
 }
 
-.about-media__item--launch {
-  --about-media-accent: #f72585;
-}
-
 html[data-theme="dark"] .about-media__item--talk {
   --about-media-accent: color-mix(in srgb, #7209b7 52%, white);
 }
 
 html[data-theme="dark"] .about-media__item--news {
   --about-media-accent: color-mix(in srgb, #4361ee 52%, white);
-}
-
-html[data-theme="dark"] .about-media__item--launch {
-  --about-media-accent: color-mix(in srgb, #f72585 52%, white);
 }
 
 .about-media__line {

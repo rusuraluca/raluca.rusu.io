@@ -7,8 +7,6 @@ import { getTagRegistry, resolveTag, resolveTags, type TagRegistry, type Resolve
 
 const CONTENT_DIR = path.join(process.cwd(), "content");
 
-export type { TagRegistry, ResolvedTag };
-
 export type Article = {
   slug: string;
   title: string;

@@ -3,6 +3,7 @@ import { Fredoka, Geist, JetBrains_Mono, Luckiest_Guy } from "next/font/google";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { HomeBodyClass } from "@/components/layout/HomeBodyClass";
+import { sharedSocialMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.css";
 
@@ -31,12 +32,17 @@ export const metadata: Metadata = {
   metadataBase: new URL(site.url),
   title: {
     default: site.title,
-    template: `%s — ${site.name}`,
+    template: `%s | ${site.name}`,
   },
   description: site.description,
   alternates: {
     canonical: site.url,
     types: { "application/rss+xml": `${site.url}/feed.xml` },
+  },
+  authors: [{ name: site.author.name, url: site.url }],
+  robots: {
+    index: true,
+    follow: true,
   },
   openGraph: {
     title: site.title,
@@ -45,6 +51,12 @@ export const metadata: Metadata = {
     siteName: site.name,
     locale: site.locale,
     type: "website",
+    ...sharedSocialMetadata.openGraph,
+  },
+  twitter: {
+    title: site.title,
+    description: site.description,
+    ...sharedSocialMetadata.twitter,
   },
 };
 

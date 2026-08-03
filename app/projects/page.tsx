@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Projects",
-  description: "Case studies — problems, constraints, decisions, and outcomes.",
+  description: "Case studies: problems, constraints, decisions, and outcomes.",
   path: "/projects",
 });
 

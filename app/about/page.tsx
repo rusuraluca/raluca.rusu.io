@@ -7,11 +7,11 @@ import { pageMetadata } from "@/lib/seo";
 export const metadata: Metadata = pageMetadata({
   title: "About",
   description:
-    "Raluca Rusu — a software engineer always on a quest, from robotics and freelance to Bloomberg in London.",
+    "About Raluca Rusu, software engineer in London, from robotics and freelance to Bloomberg. Intro, career story, talks, and press.",
   path: "/about",
 });
 
-type MediaItemType = "talk" | "news" | "launch";
+type MediaItemType = "talk" | "news";
 
 type TalkOrNewsItem = {
   type: MediaItemType;
@@ -21,13 +21,11 @@ type TalkOrNewsItem = {
   location?: string;
   date: string;
   url: string;
-  summary?: string;
 };
 
 const MEDIA_TYPE_LABELS: Record<MediaItemType, string> = {
   talk: "Talk",
   news: "News",
-  launch: "Launch",
 };
 
 /** Add talks and press links here — rendered newest to oldest. */
@@ -38,8 +36,6 @@ const talksAndNews: TalkOrNewsItem[] = [
     source: "Europa FM",
     date: "2019-03-01",
     url: "https://www.europafm.ro/brd-first-tech-challenge-romania-si-a-desemnat-castigatorii/",
-    summary:
-      "Selected as one of three Dean's List finalists representing Romania at the FIRST World Championship in Detroit.",
   },
   {
     type: "news",
@@ -48,7 +44,6 @@ const talksAndNews: TalkOrNewsItem[] = [
     source: "start-up.ro",
     date: "2020-06-17",
     url: "https://start-up.ro/programatoarea-de-17-ani-din-romania-care-a-lansat-primul-joc-pe-product-hunt/",
-    summary: "Press coverage of the Questions launch and building the product in one month.",
   },
   {
     type: "news",
@@ -56,8 +51,6 @@ const talksAndNews: TalkOrNewsItem[] = [
     source: "start-up.ro",
     date: "2021-02-02",
     url: "https://start-up.ro/duty-ventures-tinerii-romani-care-te-ajuta-sa-construiesti-mvp-ul-startup-ului/",
-    summary:
-      "Profile of Duty Ventures and how the team helps founders ship MVPs quickly.",
   },
   {
     type: "talk",
@@ -66,7 +59,6 @@ const talksAndNews: TalkOrNewsItem[] = [
     location: "California, USA",
     date: "2026-10-01",
     url: "https://ghc.anitab.org/session-catalog?tab.day=20261029&search=raluca%20rusu#/session/1772118191123001AZm8",
-    summary: "Selected to speak at Grace Hopper Celebration 2026.",
   },
   {
     type: "talk",
@@ -75,8 +67,6 @@ const talksAndNews: TalkOrNewsItem[] = [
     location: "Alba Iulia, Romania",
     date: "2024-06-21",
     url: "https://difffusion.ro/",
-    summary:
-      "Talk on 21–23 June about competing in FIRST Tech Challenge and how robotics set the foundation for a career in software.",
   },
   {
     type: "talk",
@@ -85,8 +75,6 @@ const talksAndNews: TalkOrNewsItem[] = [
     location: "Cluj-Napoca, Romania",
     date: "2022-09-15",
     url: "https://globaleawards.com/",
-    summary:
-      "Pitched a hackathon-winning web application at the Romania regional final of NTT DATA eAwards.",
   },
   {
     type: "talk",
@@ -95,7 +83,6 @@ const talksAndNews: TalkOrNewsItem[] = [
     location: "Strasbourg, France",
     date: "2019-06-01",
     url: "https://www.youtube.com/watch?v=islYAvEXT_0",
-    summary: "Address at the European Parliament in Strasbourg.",
   },
 ].sort((a, b) => b.date.localeCompare(a.date)) as TalkOrNewsItem[];
 

@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Experiments",
-  description: "Creative coding experiments — generative art, visualizations, prototypes, and side projects.",
+  description: "Creative coding experiments: generative art, visualizations, prototypes, and side projects.",
   path: "/experiments",
 });
 

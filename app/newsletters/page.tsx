@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Newsletters",
-  description: "Newsletters are on their way — subscribe pages coming soon.",
+  description: "Newsletters are on their way. Subscribe pages coming soon.",
   path: "/newsletters",
 });
 
@@ -15,8 +15,8 @@ export default function NewslettersPage() {
       <PaperPlaneIcon className="h-12 w-12 -rotate-6 text-accent" />
       <h2 className="display-hollow text-2xl">Coming soon</h2>
       <p className="max-w-md text-sm font-light leading-relaxed text-muted">
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit. Newsletters
-        will live here — each publication with its own page and archive.
+        Newsletters will live here. Each publication with its own page and
+        archive. Check back soon.
       </p>
     </Panel>
   );

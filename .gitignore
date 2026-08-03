@@ -41,6 +41,3 @@ coverage/
 
 # Turbopack
 .turbo
-
-# Generated files
-public/resume.pdf

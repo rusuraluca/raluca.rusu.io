@@ -5,7 +5,7 @@ import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
   title: "Articles",
-  description: "Long-form engineering notes — tutorials, build logs, reflections.",
+  description: "Long-form engineering notes: tutorials, build logs, reflections.",
   path: "/articles",
 });
 

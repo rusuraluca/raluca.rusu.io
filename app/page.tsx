@@ -6,6 +6,7 @@ export default function HomePage() {
     "@type": "Person",
     name: site.name,
     url: site.url,
+    email: site.author.email,
     jobTitle: "Software Engineer",
     sameAs: [site.author.github, site.author.linkedin],
   };
