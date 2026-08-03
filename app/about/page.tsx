@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
-import { Prose } from "@/components/typography/Prose";
+import Image from "next/image";
 import { TextLink } from "@/components/ui/TextLink";
+import { Prose } from "@/components/typography/Prose";
 import { pageMetadata } from "@/lib/seo";
 
 export const metadata: Metadata = pageMetadata({
@@ -10,25 +11,173 @@ export const metadata: Metadata = pageMetadata({
   path: "/about",
 });
 
+type MediaItemType = "talk" | "news" | "launch";
+
 type TalkOrNewsItem = {
-  type: "talk" | "news";
+  type: MediaItemType;
   title: string;
-  source: string;
+  source?: string;
+  venue?: string;
+  location?: string;
   date: string;
   url: string;
   summary?: string;
 };
 
-/** Add talks and press links here — rendered as embedded-style cards. */
-const talksAndNews: TalkOrNewsItem[] = [];
+const MEDIA_TYPE_LABELS: Record<MediaItemType, string> = {
+  talk: "Talk",
+  news: "News",
+  launch: "Launch",
+};
 
-function AboutPhotoPlaceholder() {
+/** Add talks and press links here — rendered newest to oldest. */
+const talksAndNews: TalkOrNewsItem[] = [
+  {
+    type: "news",
+    title: "Dean's List Finalist: BRD FIRST Tech Challenge Romania",
+    source: "Europa FM",
+    date: "2019-03-01",
+    url: "https://www.europafm.ro/brd-first-tech-challenge-romania-si-a-desemnat-castigatorii/",
+    summary:
+      "Selected as one of three Dean's List finalists representing Romania at the FIRST World Championship in Detroit.",
+  },
+  {
+    type: "news",
+    title:
+      "Programatoarea de 17 ani din România care a lansat primul joc pe Product Hunt",
+    source: "start-up.ro",
+    date: "2020-06-17",
+    url: "https://start-up.ro/programatoarea-de-17-ani-din-romania-care-a-lansat-primul-joc-pe-product-hunt/",
+    summary: "Press coverage of the Questions launch and building the product in one month.",
+  },
+  {
+    type: "news",
+    title: "Duty Ventures: helping startups build their MVP",
+    source: "start-up.ro",
+    date: "2021-02-02",
+    url: "https://start-up.ro/duty-ventures-tinerii-romani-care-te-ajuta-sa-construiesti-mvp-ul-startup-ului/",
+    summary:
+      "Profile of Duty Ventures and how the team helps founders ship MVPs quickly.",
+  },
+  {
+    type: "talk",
+    title: "Grace Hopper Celebration: Selected Speaker",
+    venue: "GHC Conference",
+    location: "California, USA",
+    date: "2026-10-01",
+    url: "https://ghc.anitab.org/session-catalog?tab.day=20261029&search=raluca%20rusu#/session/1772118191123001AZm8",
+    summary: "Selected to speak at Grace Hopper Celebration 2026.",
+  },
+  {
+    type: "talk",
+    title: "Difffusion Festival: How FIRST Tech Challenge shaped my career",
+    venue: "Difffusion Festival",
+    location: "Alba Iulia, Romania",
+    date: "2024-06-21",
+    url: "https://difffusion.ro/",
+    summary:
+      "Talk on 21–23 June about competing in FIRST Tech Challenge and how robotics set the foundation for a career in software.",
+  },
+  {
+    type: "talk",
+    title: "NTT DATA eAwards: Hackathon-winning web application pitch",
+    venue: "NTT DATA eAwards",
+    location: "Cluj-Napoca, Romania",
+    date: "2022-09-15",
+    url: "https://globaleawards.com/",
+    summary:
+      "Pitched a hackathon-winning web application at the Romania regional final of NTT DATA eAwards.",
+  },
+  {
+    type: "talk",
+    title: "European Parliament: Speech at the plenary session",
+    venue: "European Parliament",
+    location: "Strasbourg, France",
+    date: "2019-06-01",
+    url: "https://www.youtube.com/watch?v=islYAvEXT_0",
+    summary: "Address at the European Parliament in Strasbourg.",
+  },
+].sort((a, b) => b.date.localeCompare(a.date)) as TalkOrNewsItem[];
+
+const careerPhotos = [
+  {
+    id: "robotics-deans-list",
+    src: "/about/career-robotics-deans-list.png",
+    alt: "Raluca Rusu holding a Dean's List finalist certificate at the BRD FIRST Tech Challenge Romania championship",
+  },
+  {
+    id: "graduation-babes-bolyai",
+    src: "/about/career-graduation-babes-bolyai.png",
+    alt: "Raluca Rusu at her Computer Science graduation from Babeș-Bolyai University",
+  },
+  {
+    id: "beigel-bake-brick-lane",
+    src: "/about/career-beigel-bake-brick-lane.png",
+    alt: "Raluca Rusu outside Beigel Bake on Brick Lane, London",
+  },
+] as const;
+
+const talksAndNewsPhotos = [
+  {
+    id: "too-good-to-go-presentation",
+    src: "/about/talks-too-good-to-go-presentation.png",
+    alt: "Raluca Rusu giving a startup presentation with a microphone and clicker",
+  },
+  {
+    id: "panel-discussion",
+    src: "/about/talks-panel-discussion.png",
+    alt: "Raluca Rusu on a panel discussion stage",
+  },
+  {
+    id: "european-parliament-speech",
+    src: "/about/talks-european-parliament-speech.png",
+    alt: "Raluca Rusu speaking at a podium in the European Parliament",
+  },
+] as const;
+
+const introPortrait = {
+  src: "/about/intro-portrait.png",
+  alt: "Portrait of Raluca Rusu outdoors",
+} as const;
+
+const introGalleryPhotos = [
+  {
+    src: "/about/intro-snowboarding.png",
+    alt: "Raluca Rusu snowboarding in powder snow",
+  },
+  {
+    src: "/about/intro-japan.png",
+    alt: "Raluca Rusu eating taiyaki on a street in Japan at night",
+  },
+  {
+    src: "/about/intro-festival.png",
+    alt: "Raluca Rusu at an outdoor music festival at night",
+  },
+] as const;
+
+function AboutPhoto({
+  src,
+  alt,
+  priority = false,
+  sizes = "(max-width: 768px) 50vw, 17rem",
+}: {
+  src: string;
+  alt: string;
+  priority?: boolean;
+  sizes?: string;
+}) {
   return (
     <figure className="about-page__photo">
-      <div
-        className="about-page__photo-frame about-page__photo-frame--placeholder"
-        aria-hidden="true"
-      />
+      <div className="about-page__photo-frame">
+        <Image
+          src={src}
+          alt={alt}
+          fill
+          sizes={sizes}
+          className="about-page__photo-image"
+          priority={priority}
+        />
+      </div>
     </figure>
   );
 }
@@ -38,6 +187,68 @@ function AboutSectionTitle({ id, children }: { id: string; children: string }) {
     <h2 id={id} className="about-section__title">
       {children}
     </h2>
+  );
+}
+
+function formatMediaDate(date: string) {
+  return new Date(date).toLocaleDateString("en-US", {
+    year: "numeric",
+    month: "short",
+  });
+}
+
+function MediaMeta({ item }: { item: TalkOrNewsItem }) {
+  const parts: { key: string; className: string; content: string }[] = [];
+
+  if (item.source) {
+    parts.push({ key: "source", className: "about-media__source", content: item.source });
+  }
+  if (item.venue) {
+    parts.push({ key: "venue", className: "about-media__venue", content: item.venue });
+  }
+  if (item.location) {
+    parts.push({
+      key: "location",
+      className: "about-media__location",
+      content: item.location,
+    });
+  }
+  parts.push({
+    key: "date",
+    className: "about-media__date",
+    content: formatMediaDate(item.date),
+  });
+
+  return (
+    <span className="about-media__meta">
+      {parts.flatMap((part, index) => {
+        const nodes = [];
+
+        if (index > 0) {
+          nodes.push(
+            <span key={`sep-${part.key}`} className="about-media__sep" aria-hidden="true">
+              ·
+            </span>,
+          );
+        }
+
+        if (part.key === "date") {
+          nodes.push(
+            <time key={part.key} className={part.className} dateTime={item.date}>
+              {part.content}
+            </time>,
+          );
+        } else {
+          nodes.push(
+            <span key={part.key} className={part.className}>
+              {part.content}
+            </span>,
+          );
+        }
+
+        return nodes;
+      })}
+    </span>
   );
 }
 
@@ -53,31 +264,29 @@ function TalksAndNewsList({ items }: { items: TalkOrNewsItem[] }) {
   return (
     <ul className="about-media__list">
       {items.map((item) => (
-        <li key={`${item.url}-${item.date}`}>
-          <article className="about-media__card">
-            <div className="about-media__card-meta">
-              <span className="about-media__type">
-                {item.type === "talk" ? "Talk" : "News"}
-              </span>
-              <span aria-hidden="true">·</span>
-              <span>{item.source}</span>
-              <span aria-hidden="true">·</span>
-              <time dateTime={item.date}>
-                {new Date(item.date).toLocaleDateString("en-US", {
-                  year: "numeric",
-                  month: "short",
-                })}
-              </time>
-            </div>
-            <h3 className="about-media__card-title">
-              <TextLink href={item.url} external>
-                {item.title}
-              </TextLink>
-            </h3>
-            {item.summary && (
-              <p className="about-media__card-summary">{item.summary}</p>
-            )}
-          </article>
+        <li
+          key={`${item.url}-${item.date}`}
+          className={`about-media__item about-media__item--${item.type}`}
+        >
+          <p className="about-media__line">
+            <span
+              className={`about-media__type about-media__type--${item.type}`}
+            >
+              {MEDIA_TYPE_LABELS[item.type]}
+            </span>
+            <MediaMeta item={item} />
+            <span className="about-media__divider" aria-hidden="true">
+              {" | "}
+            </span>
+            <a
+              href={item.url}
+              className="about-media__link"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              {item.title}
+            </a>
+          </p>
         </li>
       ))}
     </ul>
@@ -90,24 +299,59 @@ export default function AboutPage() {
       <section className="about-section" aria-labelledby="about-intro-title">
         <AboutSectionTitle id="about-intro-title">Intro</AboutSectionTitle>
         <div className="about-section__split about-section__split--intro">
+          <div className="about-section__content">
+            <Prose className="about-page__prose">
+              <p>
+                Hi! I&apos;m Raluca. I&apos;m 23 years old. I have a habit of
+                organizing my life around the things I love, very on-brand for
+                my INTJ &amp; Red personality.
+              </p>
+              <p>
+                Most of the time, you&apos;ll find me behind a computer. But
+                don&apos;t worry, I&apos;m rarely doing anything boring. When
+                I&apos;m not, I&apos;m probably:
+              </p>
+              <ul>
+                <li>
+                  Snowboarding, (my favorite sport) or just walking somewhere (I
+                  love walking).
+                </li>
+                <li>
+                  Listening to music or at a festival. I&apos;ve been going to{" "}
+                  <TextLink href="https://electriccastle.ro/" external>
+                    Electric Castle
+                  </TextLink>{" "}
+                  for the past five years, and it has become one of my favorite
+                  yearly traditions.
+                </li>
+                <li>
+                  Traveling or eating. Favorite cuisine is Mediterranean,
+                  especially Greek food. 3/7 continents, 18/195 countries.
+                </li>
+                <li>Reading or painting.</li>
+              </ul>
+            </Prose>
+          </div>
           <div
             className="about-section__media about-section__media--single"
             aria-label="Intro photo"
           >
-            <AboutPhotoPlaceholder />
+            <AboutPhoto
+              src={introPortrait.src}
+              alt={introPortrait.alt}
+              priority
+            />
           </div>
-          <div className="about-section__content">
-            <Prose className="about-page__prose">
-              <p className="about-page__tagline">
-                <em>A software engineer always on a quest.</em>
-              </p>
-              <p>
-                Placeholder — a short note on personality, what I care about,
-                and what I&apos;m building toward. This will sit alongside a
-                single portrait.
-              </p>
-            </Prose>
-          </div>
+        </div>
+        <div className="about-section__gallery" aria-label="More intro photos">
+          {introGalleryPhotos.map((photo) => (
+            <AboutPhoto
+              key={photo.src}
+              src={photo.src}
+              alt={photo.alt}
+              sizes="(max-width: 640px) 33vw, 14rem"
+            />
+          ))}
         </div>
       </section>
 
@@ -118,12 +362,15 @@ export default function AboutPage() {
             className="about-section__media about-section__media--triple"
             aria-label="Career photos"
           >
-            <AboutPhotoPlaceholder />
-            <AboutPhotoPlaceholder />
-            <AboutPhotoPlaceholder />
+            {careerPhotos.map((photo) => (
+              <AboutPhoto key={photo.id} src={photo.src} alt={photo.alt} />
+            ))}
           </div>
           <div className="about-section__content">
             <Prose className="about-page__prose">
+              <p className="about-page__tagline">
+                <em>A software engineer always on a quest.</em>
+              </p>
               <p>
                 My journey into software engineering started in the last year of
                 middle school… although not exactly by choice. My older brother
@@ -198,6 +445,19 @@ export default function AboutPage() {
       <section className="about-section" aria-labelledby="about-talks-title">
         <AboutSectionTitle id="about-talks-title">Talks &amp; News</AboutSectionTitle>
         <TalksAndNewsList items={talksAndNews} />
+        <div
+          className="about-section__gallery about-section__gallery--talks"
+          aria-label="Talks and news photos"
+        >
+          {talksAndNewsPhotos.map((photo) => (
+            <AboutPhoto
+              key={photo.id}
+              src={photo.src}
+              alt={photo.alt}
+              sizes="(max-width: 640px) 33vw, 14rem"
+            />
+          ))}
+        </div>
       </section>
     </article>
   );

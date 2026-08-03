@@ -21,7 +21,18 @@ const nextConfig: NextConfig = {
       { source: "/contact", destination: "/", permanent: false },
       { source: "/speaking", destination: "/", permanent: false },
       { source: "/uses", destination: "/", permanent: false },
-      { source: "/resume", destination: "/resume.pdf", permanent: true },
+      {
+        source: "/resume",
+        destination:
+          "https://docs.google.com/document/d/1IqILZkQz0OrAwaCOoQA9fMZ1r7SIqmIfusWGL1qM9PM/edit?usp=sharing",
+        permanent: false,
+      },
+      {
+        source: "/resume.pdf",
+        destination:
+          "https://docs.google.com/document/d/1IqILZkQz0OrAwaCOoQA9fMZ1r7SIqmIfusWGL1qM9PM/edit?usp=sharing",
+        permanent: false,
+      },
     ];
   },
 };

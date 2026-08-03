@@ -94,7 +94,7 @@ export const blogNavItems: BlogNavItem[] = [
   },
   {
     id: "resume",
-    href: "/resume.pdf",
+    href: "https://docs.google.com/document/d/1IqILZkQz0OrAwaCOoQA9fMZ1r7SIqmIfusWGL1qM9PM/edit?usp=sharing",
     label: "resume",
     homeClassName: "blog-nav__item--resume",
     pageClassName: "blog-page-nav__item--resume",
@@ -102,7 +102,7 @@ export const blogNavItems: BlogNavItem[] = [
     iconWidth: 138,
     iconHeight: 141,
     openInNewTab: true,
-    matches: (pathname) => pathname === "/resume.pdf",
+    matches: () => false,
   },
 ];
 
