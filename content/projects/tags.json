@@ -23,12 +23,36 @@
     "color": "#57606a",
     "label": "postgres"
   },
-  "kafka": {
+  "flask": {
     "color": "#3a0ca3",
-    "label": "kafka"
+    "label": "flask"
   },
-  "kubernetes": {
+  "ruby-on-rails": {
+    "color": "#f72585",
+    "label": "ruby on rails"
+  },
+  "docker": {
     "color": "#4cc9f0",
-    "label": "kubernetes"
+    "label": "docker"
+  },
+  "machine-learning": {
+    "color": "#7209b7",
+    "label": "machine learning"
+  },
+  "nodejs": {
+    "color": "#4361ee",
+    "label": "node.js"
+  },
+  "gemini": {
+    "color": "#4cc9f0",
+    "label": "gemini"
+  },
+  "express": {
+    "color": "#57606a",
+    "label": "express"
+  },
+  "grpc": {
+    "color": "#3a0ca3",
+    "label": "gRPC"
   }
 }

@@ -79,6 +79,29 @@ function CurrentNavItem({
   );
 }
 
+function MissingPageNavTitle({
+  assets,
+}: {
+  assets: (typeof blogHomeAssets)[BlogHomeTheme];
+}) {
+  return (
+    <div className="blog-page__nav-current">
+      <span className="blog-page-nav__label blog-page__title">Page not found</span>
+      <span
+        className="blog-page-nav__icon-wrap blog-page__nav-current-icon-wrap"
+        aria-hidden="true"
+      >
+        <BlogNavIcon
+          src={assets.experiments}
+          className="blog-page-nav__icon blog-page__nav-current-icon"
+          width={119}
+          height={162}
+        />
+      </span>
+    </div>
+  );
+}
+
 /** Figma inner-page shell — logo + inline nav row, current page centered below. */
 export function BlogPageShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
@@ -119,7 +142,11 @@ export function BlogPageShell({ children }: { children: ReactNode }) {
             <BlogModeSwitch className="blog-page__mode" />
           </div>
 
-          {current && <CurrentNavItem item={current} assets={assets} />}
+          {current ? (
+            <CurrentNavItem item={current} assets={assets} />
+          ) : (
+            <MissingPageNavTitle assets={assets} />
+          )}
         </header>
 
         <main id="main" className="blog-page__main">

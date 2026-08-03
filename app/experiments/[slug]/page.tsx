@@ -76,7 +76,7 @@ export default async function ExperimentPage({
           />
         )}
 
-        <h1 className="experiment-detail__title display-hollow">{experiment.title}</h1>
+        <h1 className="experiment-detail__title">{experiment.title}</h1>
 
         {experiment.summary && (
           <p className="experiment-detail__dek">{experiment.summary}</p>

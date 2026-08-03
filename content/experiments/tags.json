@@ -22,5 +22,41 @@
   "audio": {
     "color": "#57606a",
     "label": "audio"
+  },
+  "ruby-on-rails": {
+    "color": "#f72585",
+    "label": "ruby on rails"
+  },
+  "react": {
+    "color": "#4361ee",
+    "label": "react"
+  },
+  "typescript": {
+    "color": "#3a0ca3",
+    "label": "typescript"
+  },
+  "postgres": {
+    "color": "#57606a",
+    "label": "postgres"
+  },
+  "websockets": {
+    "color": "#4cc9f0",
+    "label": "websockets"
+  },
+  "docker": {
+    "color": "#4cc9f0",
+    "label": "docker"
+  },
+  "aws": {
+    "color": "#f72585",
+    "label": "aws"
+  },
+  "nginx": {
+    "color": "#7209b7",
+    "label": "nginx"
+  },
+  "jmeter": {
+    "color": "#3a0ca3",
+    "label": "apache jmeter"
   }
 }

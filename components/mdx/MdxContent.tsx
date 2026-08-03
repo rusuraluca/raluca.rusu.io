@@ -4,6 +4,8 @@ import rehypePrettyCode from "rehype-pretty-code";
 import { shikiThemes } from "@/lib/shiki-themes";
 import { CodeBlock } from "./CodeBlock";
 import { Callout } from "./Callout";
+import { Testimonial } from "./Testimonial";
+import { ProjectFigure } from "./ProjectFigure";
 
 const prettyCodeOptions = {
   theme: shikiThemes,
@@ -14,6 +16,8 @@ const prettyCodeOptions = {
 const components = {
   pre: CodeBlock,
   Callout,
+  Testimonial,
+  ProjectFigure,
 };
 
 export function MdxContent({ source }: { source: string }) {

@@ -1,0 +1,90 @@
+---
+title: "Highway61: Senior Audio-Conferencing Platform"
+date: "2020-06-01"
+technologies: ["react", "nodejs", "express", "grpc"]
+summary: "Online chat community for people over 50: topic-based audio rooms, dial-in access, and a minimalist UI built to scale. Featured in The New York Times."
+description: "Senior-focused platform for weekly events and group audio chats, with mobile join, dial-in support, and gRPC microservices on Express and React."
+image: "/projects/highway61.jpg"
+imageAlt: "Highway61 homepage showing free chat rooms for people over 50 to learn, support, and engage with one another"
+featured: false
+order: 5
+highlights:
+  - "Built from scratch for users over 50, with weekly events and topic-based chat rooms"
+  - "Dial-in via Turbobridge and mobile join for users without browser access"
+  - "gRPC microservices architecture with Agora SDK for audio streaming"
+  - "Featured in The New York Times for its impact during pandemic isolation"
+links:
+  demo: "https://www.nytimes.com/2020/10/07/business/retirement/pandemic-life-seniors.html"
+---
+
+## Overview
+
+Highway61 is an **online chat community for seniors**. The platform is built mainly for people **over 50**, giving them a way to connect with others, learn new things, and stay socially engaged.
+
+There are **weekly events and chat rooms on different topics** that users can join. During COVID-19, that mattered even more: many elderly people were at home alone, without family or friends nearby, and needed a low-friction way to hear a friendly voice and talk about something that interested them.
+
+## Problem
+
+During the first COVID-19 lockdowns, isolation became as painful as the lockdowns themselves. Many seniors lived alone and could not rely on in-person visits or complicated video tools.
+
+The product had to work for people whose main digital reference point was something like **Facebook**: familiar patterns, minimal steps, and no assumption of technical confidence. Audio-only group rooms fit better than video: less camera anxiety, less bandwidth pressure, and more focus on conversation.
+
+## Approach
+
+We built Highway61 **from scratch** with room to **scale as the community grew**. The main audience was always users above 50, so every product decision started from accessibility and clarity:
+
+- **Minimalist interface:** fast to understand, easy to use, even for people without technical knowledge
+- **Topic-based rooms:** users browse events and discussions, then join when something resonates
+- **Mobile join:** a flow that lets people participate using **only a mobile phone**
+- **Dial-in access:** for users who cannot join from a browser, we added **dial-in functionality** through Turbobridge
+
+Design borrowed cues from platforms seniors already knew: obvious labels, large actions, and a homepage that made the next step clear ("join a discussion") instead of hiding it behind settings or menus.
+
+## Architecture
+
+As usage grew, we helped implement a **gRPC architecture based on microservices** so the platform could handle more rooms, more concurrent audio sessions, and more users without rewriting the core product.
+
+**Audio streaming** used the **Agora SDK**. **Dial-in** went through **Turbobridge**, so phone-only users could still reach the same discussions as browser and mobile participants.
+
+**Tech stack:**
+
+- **Backend:** Express (Node.js)
+- **Web app:** React
+- **Realtime audio:** Agora SDK
+- **Dial-in:** Turbobridge
+- **Services:** gRPC microservices
+
+## Recognition
+
+The work was highlighted by [*The New York Times*](https://www.nytimes.com/2020/10/07/business/retirement/pandemic-life-seniors.html) in coverage of how seniors adapted to pandemic isolation.
+
+Highway61 was also trusted by senior centers and aging agencies across the US, including community programs that needed a proven way to keep members connected remotely.
+
+## Outcome
+
+Highway61 became a practical social layer for seniors: a place to join a room, listen in, and talk when ready. It reinforced a design principle I still use today: when the audience is non-technical, the interface should feel obvious on first visit, and the hard engineering should stay invisible behind it.
+
+## Recommendation
+
+<Testimonial
+  author="Nicoleta Ungur"
+  role="Founder @Snoter"
+  date="October 9, 2023"
+  dateTime="2023-10-09"
+  context="Nicoleta worked with Raluca on the same team"
+>
+  I had the privilege of working with Raluca at Highway 61, where her dedication and
+  technical prowess significantly contributed to our team's success. Raluca is extremely
+  organized, which helped streamline our processes and enhance productivity. Her strong
+  technical background was evident in the quality of her work and her ability to address
+  complex challenges with effective solutions.
+
+  Raluca's curiosity drove her to explore new ideas and continuously improve, which in
+  turn inspired those around her. Furthermore, her excellent communication skills allowed
+  her to articulate ideas clearly and collaborate effectively with team members and
+  stakeholders alike.
+
+  I highly recommend Raluca for any position requiring technical expertise, organisational
+  skills, and effective communication. Her dedication, curiosity, and professional
+  competence make her a substantial asset to any team or project.
+</Testimonial>

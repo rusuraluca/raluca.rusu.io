@@ -1,0 +1,48 @@
+---
+title: "Age-Invariant Face Recognition Platform"
+date: "2022-06-01"
+technologies: ["python", "flask", "ruby-on-rails", "docker", "machine-learning"]
+summary: "Thesis platform to help identify missing persons across aging spans, with 94.61% face-matching accuracy and a Flask API plus Rails web app."
+description: "End-to-end machine learning platform for matching profile photos with potential sightings across different stages of aging."
+image: "/projects/age-invariant-face-recognition.svg"
+imageAlt: "Age-invariant face recognition platform case study cover"
+featured: true
+order: 1
+highlights:
+  - "Trained a computer vision model achieving 94.61% accuracy recognizing faces across aging spans"
+  - "Managed the full ML workflow with Weights & Biases, reducing iteration times by 40%"
+  - "Shipped a containerized Flask REST API and Ruby on Rails web interface"
+links:
+  repo: "https://github.com/rusuraluca/thesis"
+---
+
+## Problem
+
+Missing-person searches often rely on photos taken years apart. A child’s school portrait may need to be matched against a sighting taken decades later, but most face recognition systems degrade badly as faces age.
+
+## Approach
+
+I built an end-to-end platform for aid workers and researchers: upload reference and candidate images, run inference through a trained vision model, and review matches in a web interface.
+
+The stack was deliberately split by concern:
+
+- **Python / Flask API:** model inference, preprocessing, and REST endpoints
+- **Ruby on Rails app:** workflows, uploads, and result review
+- **Docker:** reproducible local and deployment environments
+- **Weights & Biases:** experiment tracking, hyperparameter tuning, and faster iteration loops
+
+## Key decisions
+
+Training focused on age-invariant embeddings rather than one-off accuracy on a single dataset split. Preprocessing pipelines were kept explicit and replayable so experiments stayed comparable as the model evolved.
+
+Containerizing early avoided the classic “works on my laptop” problem when handing the thesis off for review.
+
+## Outcome
+
+The final model reached **94.61% accuracy** on the project’s evaluation setup. Experiment monitoring and structured preprocessing cut iteration time by roughly **40%** compared with ad-hoc notebook workflows.
+
+## Links
+
+- [GitHub repository](https://github.com/rusuraluca/thesis)
+- [API repo](https://github.com/rusuraluca/thesis/tree/main/api)
+- [Web app repo](https://github.com/rusuraluca/thesis/tree/main/app)

@@ -69,7 +69,7 @@ export default async function ProjectPage({
           <time dateTime={project.date}>{project.year}</time>
         </div>
 
-        <h1 className="project-detail__title display-hollow">{project.title}</h1>
+        <h1 className="project-detail__title">{project.title}</h1>
 
         {project.summary && (
           <p className="project-detail__dek">{project.summary}</p>

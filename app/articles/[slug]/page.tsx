@@ -70,7 +70,7 @@ export default async function ArticlePage({
           <span>{post.readingTime}</span>
         </div>
 
-        <h1 className="article-detail__title display-hollow">{post.title}</h1>
+        <h1 className="article-detail__title">{post.title}</h1>
 
         {post.summary && (
           <p className="article-detail__dek">{post.summary}</p>

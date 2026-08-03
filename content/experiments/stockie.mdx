@@ -1,0 +1,52 @@
+---
+title: "Stockie: Full-Stack Scale, ML & Financial Data Sandbox"
+date: "2022-03-01"
+tags: ["ruby-on-rails", "react", "typescript", "postgres", "websockets", "docker", "aws", "nginx", "jmeter"]
+summary: "High-concurrency stock management and predictive analytics playground for systems engineering, ML, and load testing experiments."
+description: "Ruby on Rails and React sandbox with linear regression forecasting, WebSockets, JWT/RBAC, JMeter stress tests, and Dockerized AWS deployment."
+image: "/experiments/stockie.jpg"
+imageAlt: "Stockie 3D logo on a purple background with stacked coin discs"
+featured: false
+order: 2
+status: "archive"
+highlights:
+  - "Linear regression model embedded in the REST API for price and inventory forecasting"
+  - "Dual-layer pagination, WebSockets chat, JWT auth, and RBAC under concurrent load"
+  - "JMeter spike tests, Docker deployment on AWS EC2, and Nginx reverse proxy hardening"
+links:
+  repo: "https://github.com/rusuraluca/stockie"
+---
+
+High-concurrency stock management and predictive analytics playground built to explore scaling reads/writes, realtime messaging, ML in request paths, and production-style infrastructure.
+
+## Systems engineering & ML experiments
+
+### 1. Predictive ML & financial analytics
+
+**Linear regression engine:** Embedded a custom linear regression model directly into the REST API to process historical stock prices and inventory trends for price forecasting.
+
+**Statistical querying:** Designed API endpoints supporting complex statistical filtering over large relational datasets in PostgreSQL without blocking real-time event loops.
+
+### 2. Scaling database read/writes & real-time messaging
+
+**Dual-layer pagination:** Handled large-volume data reads by engineering server-side pagination at the database level paired with client-side chunking in React, reducing memory overhead and response payload sizes.
+
+**Real-time communication & security:** Integrated WebSockets for a multi-user live chat system, secured by JWT-based authentication and Role-Based Access Control (RBAC).
+
+### 3. Stress testing & infrastructure hardening
+
+**Spike load simulation:** Automated End-to-End (E2E) testing suites and executed Apache JMeter stress and spike tests to evaluate how rapid user bursts affect server CPU utilization and response latencies.
+
+**Production deployment:** Containerized the application stack with Docker, deployed it to an AWS EC2 instance, and placed an Nginx reverse proxy in front to manage TLS termination, route traffic, and cushion against database load spikes.
+
+## Key technical insights
+
+**Server-side pagination is mandatory:** Moving pagination entirely to the database layer eliminated request timeouts during high-concurrency read bursts.
+
+**Proxy-layer stabilization:** Routing requests through Nginx significantly smoothed out CPU spikes on the EC2 instance during JMeter load tests.
+
+**In-loop ML trade-offs:** Running linear regression models directly within request cycles is feasible for lightweight algorithms, provided queries are backed by optimized database indexing.
+
+## Links
+
+- [GitHub repository](https://github.com/rusuraluca/stockie)

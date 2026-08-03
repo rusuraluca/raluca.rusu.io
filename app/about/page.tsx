@@ -169,6 +169,37 @@ function AboutPhoto({
   );
 }
 
+function AboutPhotoGallery({
+  photos,
+  className = "",
+  ariaLabel,
+  priorityFirst = false,
+  photoSizes = "(max-width: 767px) 34vw, 14rem",
+}: {
+  photos: readonly { src: string; alt: string; id?: string }[];
+  className?: string;
+  ariaLabel?: string;
+  priorityFirst?: boolean;
+  photoSizes?: string;
+}) {
+  return (
+    <div
+      className={`about-section__gallery${className ? ` ${className}` : ""}`}
+      aria-label={ariaLabel}
+    >
+      {photos.map((photo, index) => (
+        <AboutPhoto
+          key={photo.id ?? photo.src}
+          src={photo.src}
+          alt={photo.alt}
+          priority={priorityFirst && index === 0}
+          sizes={photoSizes}
+        />
+      ))}
+    </div>
+  );
+}
+
 function AboutSectionTitle({ id, children }: { id: string; children: string }) {
   return (
     <h2 id={id} className="about-section__title">
@@ -261,18 +292,20 @@ function TalksAndNewsList({ items }: { items: TalkOrNewsItem[] }) {
             >
               {MEDIA_TYPE_LABELS[item.type]}
             </span>
-            <MediaMeta item={item} />
-            <span className="about-media__divider" aria-hidden="true">
-              {" | "}
+            <span className="about-media__body">
+              <MediaMeta item={item} />
+              <a
+                href={item.url}
+                className="about-media__link"
+                target="_blank"
+                rel="noopener noreferrer"
+              >
+                <span className="about-media__link-lead" aria-hidden="true">
+                  |{" "}
+                </span>
+                {item.title}
+              </a>
             </span>
-            <a
-              href={item.url}
-              className="about-media__link"
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              {item.title}
-            </a>
           </p>
         </li>
       ))}
@@ -280,12 +313,14 @@ function TalksAndNewsList({ items }: { items: TalkOrNewsItem[] }) {
   );
 }
 
+const introPhotos = [introPortrait, ...introGalleryPhotos] as const;
+
 export default function AboutPage() {
   return (
     <article className="about-page">
       <section className="about-section" aria-labelledby="about-intro-title">
         <AboutSectionTitle id="about-intro-title">Intro</AboutSectionTitle>
-        <div className="about-section__split about-section__split--intro">
+        <div className="about-section__intro-layout">
           <div className="about-section__content">
             <Prose className="about-page__prose">
               <p>
@@ -319,40 +354,19 @@ export default function AboutPage() {
               </ul>
             </Prose>
           </div>
-          <div
-            className="about-section__media about-section__media--single"
-            aria-label="Intro photo"
-          >
-            <AboutPhoto
-              src={introPortrait.src}
-              alt={introPortrait.alt}
-              priority
-            />
-          </div>
-        </div>
-        <div className="about-section__gallery" aria-label="More intro photos">
-          {introGalleryPhotos.map((photo) => (
-            <AboutPhoto
-              key={photo.src}
-              src={photo.src}
-              alt={photo.alt}
-              sizes="(max-width: 640px) 33vw, 14rem"
-            />
-          ))}
+          <AboutPhotoGallery
+            photos={introPhotos}
+            className="about-section__gallery--intro"
+            ariaLabel="Intro photos"
+            priorityFirst
+            photoSizes="(max-width: 767px) 50vw, 17rem"
+          />
         </div>
       </section>
 
       <section className="about-section" aria-labelledby="about-career-title">
         <AboutSectionTitle id="about-career-title">Career</AboutSectionTitle>
-        <div className="about-section__split about-section__split--career">
-          <div
-            className="about-section__media about-section__media--triple"
-            aria-label="Career photos"
-          >
-            {careerPhotos.map((photo) => (
-              <AboutPhoto key={photo.id} src={photo.src} alt={photo.alt} />
-            ))}
-          </div>
+        <div className="about-section__career-layout">
           <div className="about-section__content">
             <Prose className="about-page__prose">
               <p className="about-page__tagline">
@@ -426,25 +440,22 @@ export default function AboutPage() {
               </p>
             </Prose>
           </div>
+          <AboutPhotoGallery
+            photos={careerPhotos}
+            className="about-section__gallery--career"
+            ariaLabel="Career photos"
+          />
         </div>
       </section>
 
       <section className="about-section" aria-labelledby="about-talks-title">
         <AboutSectionTitle id="about-talks-title">Talks &amp; News</AboutSectionTitle>
         <TalksAndNewsList items={talksAndNews} />
-        <div
-          className="about-section__gallery about-section__gallery--talks"
-          aria-label="Talks and news photos"
-        >
-          {talksAndNewsPhotos.map((photo) => (
-            <AboutPhoto
-              key={photo.id}
-              src={photo.src}
-              alt={photo.alt}
-              sizes="(max-width: 640px) 33vw, 14rem"
-            />
-          ))}
-        </div>
+        <AboutPhotoGallery
+          photos={talksAndNewsPhotos}
+          className="about-section__gallery--talks"
+          ariaLabel="Talks and news photos"
+        />
       </section>
     </article>
   );
