@@ -3,15 +3,23 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "next dev",
-    "build": "next build",
+    "dev": "next dev --turbopack",
+    "build": "npm run generate:pdf && next build",
     "start": "next start",
-    "lint": "eslint"
+    "lint": "eslint",
+    "generate:pdf": "tsx scripts/generate-resume-pdf.ts"
   },
   "dependencies": {
+    "@react-pdf/renderer": "^4.5.1",
+    "gray-matter": "^4.0.3",
     "next": "16.2.12",
+    "next-mdx-remote": "^6.0.0",
     "react": "19.2.4",
-    "react-dom": "19.2.4"
+    "react-dom": "19.2.4",
+    "reading-time": "^1.5.0",
+    "rehype-pretty-code": "^0.14.5",
+    "remark-gfm": "^4.0.1",
+    "shiki": "^4.4.1"
   },
   "devDependencies": {
     "@tailwindcss/postcss": "^4",
@@ -21,6 +29,7 @@
     "eslint": "^9",
     "eslint-config-next": "16.2.12",
     "tailwindcss": "^4",
+    "tsx": "^4.23.4",
     "typescript": "^5"
   }
 }

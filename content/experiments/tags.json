@@ -1,0 +1,26 @@
+{
+  "generative": {
+    "color": "#4361ee",
+    "label": "generative"
+  },
+  "canvas": {
+    "color": "#4cc9f0",
+    "label": "canvas"
+  },
+  "visualization": {
+    "color": "#7209b7",
+    "label": "visualization"
+  },
+  "creative-coding": {
+    "color": "#f72585",
+    "label": "creative coding"
+  },
+  "webgl": {
+    "color": "#3a0ca3",
+    "label": "webgl"
+  },
+  "audio": {
+    "color": "#57606a",
+    "label": "audio"
+  }
+}

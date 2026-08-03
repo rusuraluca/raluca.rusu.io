@@ -1,0 +1,37 @@
+---
+title: "Sample Generative Sketch"
+date: "2026-01-12"
+tags: ["generative", "canvas"]
+summary: "Lorem ipsum — a placeholder experiment demonstrating the lab detail layout."
+description: "A generative canvas sketch exploring motion, noise, and playful particle fields."
+image: "/experiments/sample-generative-sketch.svg"
+imageAlt: "Sample generative sketch preview"
+featured: true
+order: 1
+status: "live"
+highlights:
+  - "Procedural motion driven by sine waves and time offsets"
+  - "Canvas rendering loop tuned for smooth 60fps playback"
+  - "Lightweight setup for quick visual iteration"
+links:
+  demo: "#"
+  repo: "#"
+---
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.
+
+## How it works
+
+Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+
+```javascript
+function draw(ctx, t) {
+  for (let i = 0; i < 100; i++) {
+    const x = Math.sin(t + i) * 120;
+    const y = Math.cos(t * 0.7 + i) * 120;
+    ctx.fillRect(x + 200, y + 200, 2, 2);
+  }
+}
+```
+
+Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore.

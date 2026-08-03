@@ -1,0 +1,35 @@
+---
+title: "Audio Reactive Blobs"
+date: "2025-09-20"
+tags: ["visualization", "creative-coding", "audio"]
+summary: "A second placeholder experiment for the lab grid — audio-reactive shapes and color mixing."
+description: "Exploring frequency analysis and soft-body motion for playful audio visualization."
+image: "/experiments/audio-reactive-blobs.svg"
+imageAlt: "Audio reactive blobs preview"
+featured: false
+order: 2
+status: "wip"
+highlights:
+  - "FFT-driven scale and hue shifts mapped to bass and treble bands"
+  - "Spring-based blob motion for organic movement"
+links:
+  repo: "#"
+---
+
+## Concept
+
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. This experiment maps audio input to visual parameters in real time.
+
+## Signal flow
+
+```javascript
+analyser.getByteFrequencyData(data);
+const bass = average(data.slice(0, 8));
+const treble = average(data.slice(32, 64));
+updateBlobs(bass, treble);
+```
+
+## Next steps
+
+- Add user-controlled color palettes
+- Export still frames for sharing

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="900" viewBox="0 0 1200 900" role="img" aria-label="Generative sketch preview">
+  <defs>
+    <linearGradient id="exp-bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#0f1020"/>
+      <stop offset="100%" stop-color="#1a1035"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="50%" cy="50%" r="50%">
+      <stop offset="0%" stop-color="#4361ee" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#4361ee" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <rect width="1200" height="900" fill="url(#exp-bg)"/>
+  <circle cx="600" cy="450" r="280" fill="url(#glow)"/>
+  <g fill="#4cc9f0" fill-opacity="0.85">
+    <circle cx="420" cy="320" r="3"/><circle cx="445" cy="350" r="2"/><circle cx="470" cy="380" r="3"/>
+    <circle cx="500" cy="410" r="2"/><circle cx="530" cy="440" r="3"/><circle cx="560" cy="470" r="2"/>
+    <circle cx="590" cy="500" r="3"/><circle cx="620" cy="470" r="2"/><circle cx="650" cy="440" r="3"/>
+    <circle cx="680" cy="410" r="2"/><circle cx="710" cy="380" r="3"/><circle cx="740" cy="350" r="2"/>
+    <circle cx="765" cy="320" r="3"/><circle cx="480" cy="520" r="2"/><circle cx="520" cy="550" r="3"/>
+    <circle cx="560" cy="580" r="2"/><circle cx="600" cy="600" r="3"/><circle cx="640" cy="580" r="2"/>
+    <circle cx="680" cy="550" r="3"/><circle cx="720" cy="520" r="2"/>
+  </g>
+  <g fill="#f72585" fill-opacity="0.7">
+    <circle cx="360" cy="430" r="2"/><circle cx="390" cy="460" r="3"/><circle cx="420" cy="490" r="2"/>
+    <circle cx="780" cy="430" r="2"/><circle cx="810" cy="460" r="3"/><circle cx="840" cy="490" r="2"/>
+  </g>
+  <path d="M300 650 Q600 720 900 650" stroke="#7209b7" stroke-width="2" fill="none" stroke-opacity="0.6"/>
+</svg>

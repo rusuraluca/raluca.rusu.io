@@ -1,0 +1,26 @@
+{
+  "engineering": {
+    "color": "#4361ee",
+    "label": "engineering"
+  },
+  "placeholder": {
+    "color": "#7209b7",
+    "label": "placeholder"
+  },
+  "career": {
+    "color": "#f72585",
+    "label": "career"
+  },
+  "infrastructure": {
+    "color": "#4cc9f0",
+    "label": "infrastructure"
+  },
+  "typescript": {
+    "color": "#3a0ca3",
+    "label": "typescript"
+  },
+  "systems": {
+    "color": "#57606a",
+    "label": "systems"
+  }
+}
