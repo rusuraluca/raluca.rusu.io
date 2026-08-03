@@ -2785,11 +2785,7 @@ html[data-theme="dark"] .experiment-status-badge {
 }
 
 .experiment-card__status-badge {
-  position: absolute;
-  top: 0.75rem;
-  left: 0.75rem;
-  z-index: 1;
-  box-shadow: 0 2px 10px color-mix(in srgb, var(--blog-ink) 18%, transparent);
+  margin-left: 0.15rem;
 }
 
 .experiment-detail__status-badge {
@@ -2852,48 +2848,6 @@ html[data-theme="dark"] .experiment-status-badge {
 
 .experiment-card__link:active {
   transform: translateY(-1px);
-}
-
-.experiment-card__cover {
-  position: relative;
-  aspect-ratio: 4 / 3;
-  overflow: hidden;
-  border-bottom: var(--border-width) solid var(--blog-ink);
-  background-color: color-mix(in srgb, var(--blog-ink) 5%, var(--blog-bg));
-}
-
-.experiment-card__cover--featured {
-  aspect-ratio: 21 / 9;
-}
-
-.experiment-card__image,
-.experiment-preview__image {
-  object-fit: cover;
-}
-
-.experiment-card__cover-placeholder,
-.experiment-preview__placeholder {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  min-height: 100%;
-  background-image: linear-gradient(
-    145deg,
-    color-mix(in srgb, var(--blog-ink) 4%, var(--blog-bg)),
-    color-mix(in srgb, var(--blog-ink) 12%, var(--blog-bg))
-  );
-}
-
-.experiment-card__cover-label {
-  font-family: var(--font-family-sans);
-  font-size: 0.6875rem;
-  font-weight: 700;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--blog-ink);
-  opacity: 0.45;
 }
 
 .experiment-card__body {
@@ -3061,16 +3015,6 @@ html[data-theme="dark"] .experiment-status-badge {
   aspect-ratio: 16 / 10;
 }
 
-.experiment-preview__image {
-  display: block;
-  width: 100%;
-  height: auto;
-}
-
-.experiment-preview__placeholder {
-  aspect-ratio: 4 / 3;
-}
-
 .experiment-preview__iframe {
   display: block;
   width: 100%;
@@ -3166,25 +3110,7 @@ html[data-theme="dark"] .experiment-status-badge {
 }
 
 @media (min-width: 768px) {
-  .experiment-card--featured .experiment-card__link {
-    flex-direction: row;
-  }
-
-  .experiment-card--featured .experiment-card__cover {
-    flex: 1.15;
-    aspect-ratio: auto;
-    min-height: 100%;
-    border-bottom: none;
-    border-right: var(--border-width) solid var(--blog-ink);
-  }
-
-  .experiment-card--featured .experiment-card__cover--featured {
-    aspect-ratio: auto;
-  }
-
   .experiment-card--featured .experiment-card__body {
-    flex: 1;
-    justify-content: center;
     padding: clamp(1.25rem, 3vw, 2rem);
   }
 }

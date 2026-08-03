@@ -52,7 +52,6 @@ export default async function ExperimentPage({
     description: experiment.summary,
     author: { "@type": "Person", name: site.name, url: site.url },
     url: `${site.url}/experiments/${experiment.slug}`,
-    ...(experiment.image ? { image: `${site.url}${experiment.image}` } : {}),
   };
 
   return (
@@ -119,12 +118,12 @@ export default async function ExperimentPage({
         )}
       </header>
 
-      <ExperimentPreview
-        title={experiment.title}
-        image={experiment.image}
-        imageAlt={experiment.imageAlt}
-        embedUrl={experiment.embedUrl}
-      />
+      {experiment.embedUrl && (
+        <ExperimentPreview
+          title={experiment.title}
+          embedUrl={experiment.embedUrl}
+        />
+      )}
 
       {experiment.highlights.length > 0 && (
         <section className="project-detail__highlights" aria-label="Key highlights">

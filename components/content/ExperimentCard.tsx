@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import type { CSSProperties } from "react";
 import { ArticleTagList } from "@/components/ui/ArticleTag";
@@ -13,8 +12,6 @@ export type ExperimentCardData = {
   title: string;
   year: string;
   summary: string;
-  image?: string;
-  imageAlt: string;
   featured: boolean;
   status?: ExperimentStatus;
   resolvedTags: ResolvedTag[];
@@ -41,49 +38,6 @@ function ExperimentStatusBadge({
   );
 }
 
-function ExperimentCover({
-  image,
-  imageAlt,
-  featured,
-  status,
-}: {
-  image?: string;
-  imageAlt: string;
-  featured: boolean;
-  status?: ExperimentStatus;
-}) {
-  return (
-    <div
-      className={`experiment-card__cover${featured ? " experiment-card__cover--featured" : ""}`}
-    >
-      {status && (
-        <ExperimentStatusBadge
-          status={status}
-          className="experiment-card__status-badge"
-        />
-      )}
-
-      {image ? (
-        <Image
-          src={image}
-          alt={imageAlt}
-          fill
-          sizes={
-            featured
-              ? "(max-width: 768px) 100vw, 68rem"
-              : "(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
-          }
-          className="experiment-card__image"
-        />
-      ) : (
-        <div className="experiment-card__cover-placeholder" aria-hidden="true">
-          <span className="experiment-card__cover-label">experiment</span>
-        </div>
-      )}
-    </div>
-  );
-}
-
 export function ExperimentCard({
   experiment,
   featured = false,
@@ -102,18 +56,17 @@ export function ExperimentCard({
         href={`/experiments/${experiment.slug}`}
         className="experiment-card__link group"
       >
-        <ExperimentCover
-          image={experiment.image}
-          imageAlt={experiment.imageAlt}
-          featured={isFeatured}
-          status={experiment.status}
-        />
-
         <div className="experiment-card__body">
           <div className="experiment-card__meta">
             <span className="experiment-card__eyebrow">Experiment</span>
             <span aria-hidden="true">·</span>
             <span>{experiment.year}</span>
+            {experiment.status && (
+              <ExperimentStatusBadge
+                status={experiment.status}
+                className="experiment-card__status-badge"
+              />
+            )}
           </div>
 
           <h2 className="experiment-card__title">{experiment.title}</h2>
@@ -139,46 +92,22 @@ export function ExperimentCard({
 
 export function ExperimentPreview({
   title,
-  image,
-  imageAlt,
   embedUrl,
 }: {
   title: string;
-  image?: string;
-  imageAlt: string;
   embedUrl?: string;
 }) {
-  if (embedUrl) {
-    return (
-      <div className="experiment-preview experiment-preview--embed">
-        <iframe
-          src={embedUrl}
-          title={`${title} interactive preview`}
-          className="experiment-preview__iframe"
-          loading="lazy"
-          sandbox="allow-scripts allow-same-origin"
-        />
-      </div>
-    );
-  }
+  if (!embedUrl) return null;
 
   return (
-    <div className="experiment-preview">
-      {image ? (
-        <Image
-          src={image}
-          alt={imageAlt}
-          width={1400}
-          height={1050}
-          priority
-          sizes="(max-width: 768px) 100vw, 68rem"
-          className="experiment-preview__image"
-        />
-      ) : (
-        <div className="experiment-preview__placeholder" aria-hidden="true">
-          <span className="experiment-card__cover-label">interactive preview</span>
-        </div>
-      )}
+    <div className="experiment-preview experiment-preview--embed">
+      <iframe
+        src={embedUrl}
+        title={`${title} interactive preview`}
+        className="experiment-preview__iframe"
+        loading="lazy"
+        sandbox="allow-scripts allow-same-origin"
+      />
     </div>
   );
 }

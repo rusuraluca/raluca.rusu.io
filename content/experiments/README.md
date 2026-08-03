@@ -8,7 +8,7 @@ Experiments live as MDX files in this folder. Tag colors are managed in `tags.js
 npx tsx scripts/new-experiment.ts my-sketch "My Sketch"
 ```
 
-Add a preview image at `public/experiments/my-sketch.jpg`, then edit the generated MDX.
+Add a preview image at `public/experiments/my-sketch.jpg` only if you want a cover image on the card or detail page. Experiments work without one.
 
 ## Experiment frontmatter
 
@@ -19,8 +19,6 @@ date: "2026-01-12"
 tags: ["generative", "canvas"]
 summary: "Short preview for cards."
 description: "Optional SEO description."
-image: "/experiments/my-sketch.jpg"
-imageAlt: "Preview image description"
 featured: true
 order: 1
 status: "live" # idea | wip | live | archive
