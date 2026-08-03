@@ -32,7 +32,7 @@ links:
 ---
 ```
 
-- `order` controls listing order (lower appears first)
+- `order` controls listing order (lower appears first); ties break by project date (newer first)
 - `featured: true` gives the project a large hero card on the index page
 - `highlights` appear on cards and the case study page
 

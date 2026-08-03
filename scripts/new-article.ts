@@ -38,6 +38,7 @@ summary: "One-line description shown on cards and in previews."
 description: "Optional longer description for SEO (falls back to summary)."
 image: "/articles/${slug}.jpg"
 imageAlt: "${title.replace(/"/g, '\\"')}"
+order: 99
 draft: true
 ---
 

@@ -21,11 +21,13 @@ summary: "Short preview text for cards."
 description: "Optional SEO description (uses summary if omitted)."
 image: "/articles/my-slug.jpg"
 imageAlt: "Describe the cover image"
+order: 99
 draft: false
 ---
 ```
 
-Set `draft: true` while writing. Only published articles (`draft: false`) appear on the site.
+- `order` controls listing order (lower appears first); ties break by publish date (newer first)
+- Set `draft: true` while writing. Only published articles (`draft: false`) appear on the site.
 
 ## Tag colors
 

@@ -31,6 +31,10 @@
     "color": "#4361ee",
     "label": "react"
   },
+  "gemini": {
+    "color": "#4cc9f0",
+    "label": "gemini"
+  },
   "typescript": {
     "color": "#3a0ca3",
     "label": "typescript"

@@ -11,6 +11,7 @@ export type Article = {
   slug: string;
   title: string;
   date: string;
+  order: number;
   tags: string[];
   resolvedTags: ResolvedTag[];
   summary: string;
@@ -83,6 +84,7 @@ function mapArticle(
     slug,
     title,
     date: data.date as string,
+    order: (data.order as number) ?? 99,
     tags,
     resolvedTags: resolveTags(tags, registry),
     summary: ((data.summary ?? data.description) as string) ?? "",
@@ -100,7 +102,9 @@ export function getArticles(): Article[] {
   return readCollection("articles")
     .map(({ slug, data, content }) => mapArticle(slug, data, content, registry))
     .filter((p) => !p.draft)
-    .sort((a, b) => (a.date < b.date ? 1 : -1));
+    .sort(
+      (a, b) => a.order - b.order || (a.date < b.date ? 1 : -1),
+    );
 }
 
 export function getArticle(slug: string): Article | undefined {
@@ -181,7 +185,9 @@ export function getProjects(): Project[] {
 
   return readCollection("projects")
     .map(({ slug, data, content }) => mapProject(slug, data, content, registry))
-    .sort((a, b) => a.order - b.order);
+    .sort(
+      (a, b) => a.order - b.order || (a.date < b.date ? 1 : -1),
+    );
 }
 
 export function getProject(slug: string): Project | undefined {
@@ -237,8 +243,8 @@ export function getExperiments(): Experiment[] {
     .map(({ slug, data, content }) => mapExperiment(slug, data, content, registry))
     .sort(
       (a, b) =>
-        compareExperimentsByStatus(a.status, b.status) ||
         a.order - b.order ||
+        compareExperimentsByStatus(a.status, b.status) ||
         (a.date < b.date ? 1 : -1),
     );
 }
