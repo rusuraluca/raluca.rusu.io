@@ -47,43 +47,54 @@ export function ExperimentCard({
 }) {
   const isFeatured = featured || experiment.featured;
   const previewHighlights = experiment.highlights.slice(0, 2);
+  const statusMeta = experiment.status
+    ? getExperimentStatusMeta(experiment.status)
+    : null;
 
   return (
     <article
       className={`experiment-card${isFeatured ? " experiment-card--featured" : ""}`}
+      data-status={experiment.status}
+      style={
+        statusMeta
+          ? ({ "--folder-accent": statusMeta.color } as CSSProperties)
+          : undefined
+      }
     >
       <Link
         href={`/experiments/${experiment.slug}`}
         className="experiment-card__link group"
       >
-        <div className="experiment-card__body">
-          <div className="experiment-card__meta">
-            <span className="experiment-card__eyebrow">Experiment</span>
-            <span aria-hidden="true">·</span>
-            <span>{experiment.year}</span>
-            {experiment.status && (
-              <ExperimentStatusBadge
-                status={experiment.status}
-                className="experiment-card__status-badge"
-              />
-            )}
+        <div className="experiment-card__folder">
+          <div className="experiment-card__tab">
+            <span className="experiment-card__tab-label">
+              {statusMeta?.label ?? "Experiment"}
+            </span>
           </div>
 
-          <h2 className="experiment-card__title">{experiment.title}</h2>
-          <p className="experiment-card__summary">{experiment.summary}</p>
+          <div className="experiment-card__body">
+            <div className="experiment-card__meta">
+              <span className="experiment-card__eyebrow">Experiment</span>
+              <span aria-hidden="true">·</span>
+              <span>{experiment.year}</span>
+            </div>
 
-          {previewHighlights.length > 0 && (
-            <ul className="experiment-card__highlights">
-              {previewHighlights.map((highlight) => (
-                <li key={highlight}>{highlight}</li>
-              ))}
-            </ul>
-          )}
+            <h2 className="experiment-card__title">{experiment.title}</h2>
+            <p className="experiment-card__summary">{experiment.summary}</p>
 
-          <ArticleTagList
-            tags={experiment.resolvedTags}
-            className="experiment-card__tags"
-          />
+            {previewHighlights.length > 0 && (
+              <ul className="experiment-card__highlights">
+                {previewHighlights.map((highlight) => (
+                  <li key={highlight}>{highlight}</li>
+                ))}
+              </ul>
+            )}
+
+            <ArticleTagList
+              tags={experiment.resolvedTags}
+              className="experiment-card__tags"
+            />
+          </div>
         </div>
       </Link>
     </article>
