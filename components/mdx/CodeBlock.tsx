@@ -21,7 +21,7 @@ export function CodeBlock(props: HTMLAttributes<HTMLPreElement>) {
         type="button"
         onClick={copy}
         aria-label="Copy code"
-        className="code-block__copy absolute right-3 top-3 rounded-[0.55rem] border-2 border-ink bg-bg p-1.5 text-ink opacity-0 transition-opacity duration-150 focus-visible:opacity-100 group-hover:opacity-100 hover:bg-ink hover:text-bg"
+        className="code-block__copy"
       >
         {copied ? (
           <CheckIcon className="h-4 w-4 text-code" />
