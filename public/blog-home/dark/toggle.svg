@@ -25,9 +25,9 @@
 <path id="Vector_23" d="M12.4929 144.775C14.6123 144.775 16.3305 142.951 16.3305 140.7C16.3305 138.45 14.6123 136.625 12.4929 136.625C10.3735 136.625 8.65532 138.45 8.65532 140.7C8.65532 142.951 10.3735 144.775 12.4929 144.775Z" stroke="#c9d1d9" stroke-miterlimit="10"/>
 <path id="Vector_24" d="M87.1845 144.775C89.304 144.775 91.0221 142.951 91.0221 140.7C91.0221 138.45 89.304 136.625 87.1845 136.625C85.0651 136.625 83.3469 138.45 83.3469 140.7C83.3469 142.951 85.0651 144.775 87.1845 144.775Z" stroke="#c9d1d9" stroke-miterlimit="10"/>
 <g id="toggle-switch 1">
-<path id="Vector_25" d="M41.8199 63.2601H58.0899V93.7401H41.8199L37.4599 73.4601L41.8199 63.2601Z" stroke="#c9d1d9" stroke-width="2" stroke-linejoin="round"/>
-<path id="Vector_26" d="M37.4599 73.4601H52.6299L58.0899 93.7401" stroke="#c9d1d9" stroke-linejoin="round"/>
-<path id="Vector_27" d="M58.0899 63.2601L52.6299 73.4601" stroke="#c9d1d9" stroke-linejoin="round"/>
+<path id="Vector_25" d="M41.8186 93.7394L58.0886 93.7407L58.0911 63.2607L41.8211 63.2594L37.4595 83.539L41.8186 93.7394Z" stroke="#c9d1d9" stroke-width="2" stroke-linejoin="round"/>
+<path id="Vector_26" d="M37.4595 83.539L52.6295 83.5402L58.0911 63.2607" stroke="#c9d1d9" stroke-linejoin="round"/>
+<path id="Vector_27" d="M58.0886 93.7407L52.6295 83.5402" stroke="#c9d1d9" stroke-linejoin="round"/>
 </g>
 </g>
 </svg>

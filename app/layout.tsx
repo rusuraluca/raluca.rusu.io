@@ -3,6 +3,7 @@ import { Fredoka, Geist, JetBrains_Mono, Luckiest_Guy } from "next/font/google";
 import { SiteShell } from "@/components/layout/SiteShell";
 import { SkipLink } from "@/components/layout/SkipLink";
 import { HomeBodyClass } from "@/components/layout/HomeBodyClass";
+import { ThemeFavicon } from "@/components/layout/ThemeFavicon";
 import { sharedSocialMetadata } from "@/lib/seo";
 import { site } from "@/lib/site";
 import "./globals.css";
@@ -44,6 +45,10 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  icons: {
+    icon: "/favicon-light.png",
+    apple: "/apple-icon-light.png",
+  },
   openGraph: {
     title: site.title,
     description: site.description,
@@ -71,6 +76,20 @@ const themeScript = `
           ? "dark"
           : "light";
     document.documentElement.setAttribute("data-theme", theme);
+    var suffix = theme === "dark" ? "dark" : "light";
+    ["icon", "apple-touch-icon"].forEach(function (rel) {
+      var href =
+        rel === "icon"
+          ? "/favicon-" + suffix + ".png"
+          : "/apple-icon-" + suffix + ".png";
+      var link = document.querySelector('link[rel="' + rel + '"]');
+      if (!link) {
+        link = document.createElement("link");
+        link.rel = rel;
+        document.head.appendChild(link);
+      }
+      link.href = href;
+    });
   } catch (e) {}
 })();
 `;
@@ -88,6 +107,7 @@ export default function RootLayout({
     >
       <body className="min-h-full">
         <script dangerouslySetInnerHTML={{ __html: themeScript }} />
+        <ThemeFavicon />
         <SkipLink />
         <HomeBodyClass />
         <SiteShell>{children}</SiteShell>

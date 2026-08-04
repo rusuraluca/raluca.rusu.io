@@ -2,6 +2,7 @@
 
 import { useSyncExternalStore, useState } from "react";
 import { blogHomeAssets } from "@/components/blog/blog-home-assets";
+import { applyTheme } from "@/lib/theme-client";
 
 function subscribe(callback: () => void) {
   const observer = new MutationObserver(callback);
@@ -28,9 +29,7 @@ export function BlogModeSwitch({ className = "" }: { className?: string }) {
   const assets = blogHomeAssets[theme];
 
   function toggle() {
-    const next = isDark ? "light" : "dark";
-    document.documentElement.setAttribute("data-theme", next);
-    localStorage.setItem("theme", next);
+    applyTheme(isDark ? "light" : "dark");
   }
 
   return (
