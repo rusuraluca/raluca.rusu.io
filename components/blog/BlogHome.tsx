@@ -25,7 +25,7 @@ function getServerSnapshot() {
   return false;
 }
 
-/** Figma Blog homepage — full-bleed gate with illustrated nav row. */
+/** Figma Blog homepage: full-bleed gate with illustrated nav row. */
 export function BlogHome() {
   const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const assets = blogHomeAssets[isDark ? "dark" : "light"];

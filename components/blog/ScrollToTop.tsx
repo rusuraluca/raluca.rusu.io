@@ -30,7 +30,7 @@ function ScrollTopIcon() {
   );
 }
 
-/** Appears after scrolling — jumps back to page nav / top. */
+/** Appears after scrolling, jumps back to page nav / top. */
 export function ScrollToTop() {
   const [visible, setVisible] = useState(false);
 

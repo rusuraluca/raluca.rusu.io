@@ -102,7 +102,7 @@ function MissingPageNavTitle({
   );
 }
 
-/** Figma inner-page shell — logo + inline nav row, current page centered below. */
+/** Figma inner-page shell: logo + inline nav row, current page centered below. */
 export function BlogPageShell({ children }: { children: ReactNode }) {
   const pathname = usePathname();
   const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);

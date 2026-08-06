@@ -1,45 +1,237 @@
 ---
-title: "Age-Invariant Face Recognition Platform"
-date: "2022-06-01"
-technologies: ["python", "flask", "ruby-on-rails", "docker", "machine-learning"]
-summary: "Thesis platform to help identify missing persons across aging spans, with 94.61% face-matching accuracy and a Flask API plus Rails web app."
-description: "End-to-end machine learning platform for matching profile photos with potential sightings across different stages of aging."
-image: "/projects/age-invariant-face-recognition.svg"
-imageAlt: "Age-invariant face recognition platform case study cover"
+title: "MPAIFR: Age-Invariant Face Recognition for Missing Persons"
+date: "2024-06-01"
+technologies: ["python", "pytorch", "flask", "ruby-on-rails", "docker", "machine-learning"]
+summary: "Undergraduate thesis: a Multi-Task + DAL model that decouples identity, age, and gender features, reaching 94.61% Rank-1 on FG-NET and shipping as a Flask API plus Rails web app for missing-person search."
+description: "Novel Decorrelated Adversarial Learning model for age-invariant face recognition, with a Flask REST API and a Ruby on Rails missing-person search platform."
+image: "/projects/age-invariant-face-recognition/dal-architecture.png"
+imageAlt: "Multi-Task + DAL architecture with identity, age, and gender discriminators and the Decorrelated Adversarial Learning regularizer"
 featured: true
 order: 1
 highlights:
-  - "Trained a computer vision model achieving 94.61% accuracy recognizing faces across aging spans"
-  - "Managed the full ML workflow with Weights & Biases, reducing iteration times by 40%"
-  - "Shipped a containerized Flask REST API and Ruby on Rails web interface"
+  - "Novel Multi-Task + DAL model, a first for decorrelating identity, age, and gender features at once"
+  - "94.61% Rank-1 on FG-NET leave-one-out, above prior state of the art (Age + DAL 94.50%, AIM 93.20%)"
+  - "Curated two age-invariant datasets (up to 20,387 images) from AgeDB and CACD with manual label verification"
+  - "Shipped as a containerized Flask + PyTorch REST API and a Ruby on Rails web app for missing-person search"
 links:
   repo: "https://github.com/rusuraluca/thesis"
 ---
 
-## Problem
+## Overview
 
-Missing-person searches often rely on photos taken years apart. A child’s school portrait may need to be matched against a sighting taken decades later, but most face recognition systems degrade badly as faces age.
+This was my undergraduate thesis (MPAIFR, Babes-Bolyai University, 2024): an end-to-end system for finding missing persons across aging. A child's school portrait often needs to be matched against a sighting taken decades later, and most face-recognition systems degrade badly as faces age. I designed, trained, and shipped the whole stack myself, a novel model, a REST API to serve it, and a web app that law enforcement and the public could actually use.
 
-## Approach
+## The core idea
 
-I built an end-to-end platform for aid workers and researchers: upload reference and candidate images, run inference through a trained vision model, and review matches in a web interface.
+Instead of chasing accuracy on a benchmark, the research attacked the root cause: facial embeddings blend identity with age and gender information. The model factorizes every embedding into three uncorrelated parts: identity, age, and gender. A Feature Residual Factorization Module (FRFM) learns the age and gender components as residuals, so the identity features are what is left over, x_id = x - x_age - x_gender.
 
-The stack was deliberately split by concern:
+To make the three parts genuinely independent, training uses Decorrelated Adversarial Learning (DAL). A Batch Canonical Correlation Mapping Module (BCCM) measures the pairwise correlation between the identity, age, and gender features, and adversarial training alternates between minimizing that correlation and, with flipped gradients, maximizing it. Each branch is forced to carry only its own signal. To my knowledge this was the first application of decorrelated adversarial feature learning across three facial attributes at once.
 
-- **Python / Flask API:** model inference, preprocessing, and REST endpoints
-- **Ruby on Rails app:** workflows, uploads, and result review
-- **Docker:** reproducible local and deployment environments
-- **Weights & Biases:** experiment tracking, hyperparameter tuning, and faster iteration loops
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/feature-factorization.png"
+  alt="Feature Residual Factorization Module diagram: a face embedding is decomposed into age, gender, and identity feature branches"
+  caption="Feature factorization: age and gender are learned as residuals, leaving pure identity features."
+/>
 
-## Key decisions
+## Model design
 
-Training focused on age-invariant embeddings rather than one-off accuracy on a single dataset split. Preprocessing pipelines were kept explicit and replayable so experiments stayed comparable as the model evolved.
+- **Backbone:** Inception-ResNet-V1 pre-trained on VGGFace2, used via transfer learning. A custom 64-layer CNN was built first, but with limited data it underperformed, and the switch to transfer learning was the decision that made results viable.
 
-Containerizing early avoided the classic “works on my laptop” problem when handing the thesis off for review.
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/backbone-architecture.png"
+  alt="Inception-ResNet-V1 backbone architecture: stem, Inception-ResNet A/B/C blocks, reductions, pooling, dropout, and fully connected layer producing initial face features"
+  caption="Inception-ResNet-V1 backbone: the blocks that produce the 512-dimensional face embeddings."
+/>
 
-## Outcome
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/custom-cnn.png"
+  alt="The custom 64-layer CNN architecture with stacked 3x3 convolutions that was tried before switching to transfer learning"
+  caption="The 64-layer custom CNN built first. With limited data it underperformed, so the project pivoted to transfer learning."
+/>
 
-The final model reached **94.61% accuracy** on the project’s evaluation setup. Experiment monitoring and structured preprocessing cut iteration time by roughly **40%** compared with ad-hoc notebook workflows.
+- **Factorization:** the FRFM decomposes a 512-dimensional embedding into x_age, x_gender, and the identity residual x_id, mirroring the residual factorization approach of [KC18].
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/frfm-architecture.png"
+  alt="Feature Residual Factorization Module internals: initial face features are decomposed into identity-dependent and age-dependent feature residuals"
+  caption="FRFM internals: initial face features split into identity-dependent and age-dependent residuals."
+/>
+
+- **Discriminators:** three parallel heads, one per attribute. Identity uses the CosFace margin classification head, age is cast as a 3-way problem (0-25, 25-55, 56+) instead of a regression because age labels are noisy, and gender is a 2-way classification. Each non-identity head is a two-layer stack of Fully Connected, BatchNorm, ReLU, Fully Connected with cross-entropy.
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/identity-discriminator.png"
+  alt="Identity discriminator architecture: identity-dependent features mapped to normalized embeddings for classification"
+  caption="Identity discriminator: features to normalized embeddings for identity classification."
+/>
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/age-discriminator.png"
+  alt="Age discriminator architecture: age-dependent features through fully connected layers to logits and cross-entropy loss"
+  caption="Age discriminator: cross-entropy over three age groups."
+/>
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/gender-discriminator.png"
+  alt="Gender discriminator architecture: gender-dependent features through fully connected layers to logits and cross-entropy loss"
+  caption="Gender discriminator: binary cross-entropy."
+/>
+
+- **Decorrelation:** the BCCM reduces each feature set to a scalar via a learned linear predictor, then computes the three pairwise correlation coefficients (identity-age, identity-gender, age-gender) as covariance over the product of standard deviations. The DAL regularizer drives the joint loss.
+- **Loss:** a composite objective, L = L_CE(x_id) + λ1 * L_CE(x_age) + λ2 * L_CE(x_gender) + λ3 * L_DALR, where the last term is the adversarial correlation loss and the λ coefficients balance each task.
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/identity-loss-head.png"
+  alt="How the backbone embeddings are transformed for the identity classification head with CosFace margin loss"
+  caption="The identity head during evaluation: initial face features transformed into classification logits."
+/>
+
+- **Training:** adversarial regime that runs 40 iterations minimizing feature correlation and 30 maximizing it (flipping BCCM gradients while freezing the backbone and FRFM), with SGD at a 0.01 learning rate, batch size 64, 40 epochs, 0.4 dropout, tracked end to end in Weights & Biases.
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/data-processing-pipeline.png"
+  alt="Training and evaluation data pipelines: random crop and horizontal flip on the training side, center crop on the test side, both resized to 160x160, normalized, and converted to tensors"
+  caption="Train and test preprocessing: random crop plus horizontal flip on the training side, center crop on the test side."
+/>
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/canonical-correlation-training.png"
+  alt="Weights & Biases graph of the canonical correlation metric during training, showing the adversarial minimize and maximize phases"
+  caption="Weights & Biases: the DAL regularizer alternating between minimizing and maximizing feature correlation."
+/>
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/dal-architecture.png"
+  alt="Multi-Task + DAL architecture with identity, age, and gender discriminators and the Decorrelated Adversarial Learning regularizer"
+  caption="Multi-Task + DAL: three discriminators supervised in parallel with adversarial decorrelation."
+/>
+
+## The data
+
+Public aging datasets are small and biased. I built two curated datasets from AgeDB and a slice of CACD, manually verifying age and gender labels, identity uniqueness, and image quality:
+
+- **Small:** 500 identities, 15,752 images, ages 0 to 101
+- **Large:** 1,035 identities, 20,387 images, ages 0 to 101
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/gender-distribution.png"
+  alt="Pie chart of the dataset gender distribution, roughly 60 percent male and 40 percent female"
+  caption="The curated dataset is skewed toward male identities, one of the biases the manual label verification tried to correct."
+/>
+
+## Results
+
+The model was evaluated on FG-NET under leave-one-out protocol, where no FG-NET image ever appears in training. At **94.61% Rank-1**, it beat every prior method in the comparison table, including the 2019 Age + DAL baseline (94.50%) this work extends, and AIM (93.20%). On a harder two-pairs test (2,000 pairs with a minimum 15-year age gap) it reached **82.21%**, and on an 80/20 split it hit **93.89%** (small) and **86.24%** (large).
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/leave-one-out-evaluation.png"
+  alt="Weights & Biases training curves from the leave-one-out evaluation of the Multi-Task + DAL model on FG-NET"
+  caption="Leave-one-out evaluation on FG-NET: 94.61% Rank-1, above prior state of the art."
+/>
+
+## The REST API
+
+To make the model usable outside a Jupyter notebook, I wrapped it in a public REST API: Flask as the web layer, PyTorch for the model and tensor math, torchvision for the transform pipeline, and nn.Functional for the final cosine similarity. The whole thing runs as a single service with a minimal internal design: a Singleton config object, a model loader that restores the Multi-Task + DAL weights, a similarity handler, and the Flask application that exposes the routes.
+
+The API exposes two POST endpoints. Both take form-encoded request bodies and answer with JSON:
+
+| Endpoint | Type | Params | Response |
+| --- | --- | --- | --- |
+| `/images_similarity` | POST | `image1`, `image2` | `{"similarity": -0.70}` |
+| `/batch_images_similarity` | POST | two batches of images (min 1 each) | `{"similarity": 0.89}` |
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/api-requests.png"
+  alt="The two API endpoints with their HTTP type, form parameters, and example similarity response"
+  caption="The full API surface: two POST endpoints, form-encoded parameters, JSON responses."
+/>
+
+```bash
+curl -X POST https://<public-url>/images_similarity \
+  -F image1=@childhood.jpg \
+  -F image2=@sighting.jpg
+# => {"similarity": -0.70}
+```
+
+On the way in, every image goes through the same preprocessing the model saw at training time: resize to 160x160, center crop, normalize to zero mean and unit variance, convert to a tensor. Each image is then transformed twice, once as-is and once horizontally flipped, to augment the input. The two embeddings per image are combined, and cosine similarity between the combined feature sets is computed via nn.Functional. The score ranges from -1 (completely different) to 1 (identical).
+
+Responses use conventional HTTP codes. I mapped the failure modes to two codes plus one error body each, so callers get consistent, actionable errors rather than bare 500s:
+
+| Code | Meaning | Error |
+| --- | --- | --- |
+| 200 OK | Success | |
+| 400 Bad Request | Missing or invalid parameters, request validation failed | `invalid_request_error` |
+| 402 Request Failed | Something broke server side, e.g. the service is down | `request_error` |
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/api-http-codes.png"
+  alt="HTTP response codes used by the MPAIFR API: 200 OK, 400 Bad Request, 402 Request Failed"
+  caption="HTTP status codes: 200 on success, 400 for bad parameters, 402 for server-side failures."
+/>
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/api-errors.png"
+  alt="Error types returned by the MPAIFR API: invalid_request_error and request_error with their descriptions"
+  caption="Two error types, one for bad input and one for failures on our side."
+/>
+
+**Deployment.** The API runs inside a Docker container built from an image that bundles every dependency plus the trained weights, so the model behaves identically across environments. To make the local service reachable from the Rails app without opening the network, I used Ngrok: the Ngrok agent opens a tunnel through the Ngrok server, and the public URL it returns forwards secure requests straight into the Flask app inside the container.
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/api-architecture.png"
+  alt="API deployment architecture: a Docker container running Flask and model inference, exposed through an Ngrok tunnel"
+  caption="Docker encapsulates the Flask app and model; Ngrok tunnels public traffic into the container."
+/>
+
+## The web application
+
+The Rails app is the product layer: a missing-person search platform built around the model API. Four audiences use it: regular users looking for missing persons, admins managing the data, developers maintaining it, and the customers who fund it (law enforcement, NGOs).
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/web-app-use-cases.png"
+  alt="Use case diagram of the missing-person search web application for regular users and admins"
+  caption="Use cases for the missing-person search app, from profile browsing to inquiry labeling by admins."
+/>
+
+**Regular users** register and log in, browse a dashboard of profiles (photo plus gender, nationality, age), and submit inquiries: a photo of a person who might be a match, plus the date, city, and country where the image was taken. **Admins** get an enhanced dashboard with full profile details (name, country, city and date of disappearance), manage every profile and inquiry, assign roles, and review the model's similarity score for each inquiry, labeling it **Found**, **Not Found**, or **Unverified** and overriding the label by hand when needed.
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/app-user-flow.png"
+  alt="Wireframes from the thesis showing the regular user flow: login, dashboard with profile cards, and profile detail"
+  caption="Regular user flow from the thesis: sign in, browse profile cards, open a profile to send an inquiry."
+/>
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/app-admin-flow.png"
+  alt="Wireframes showing the admin dashboard with profile management and the user management table with email lists and role actions"
+  caption="Admin side: manage profiles and the user table with roles."
+/>
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/app-profile-form.png"
+  alt="Wireframe of the profile form with date of birth, file upload, and send inquiry controls"
+  caption="Profile and inquiry form: details, photo upload, and the send-inquiry action."
+/>
+
+**Architecture.** The app follows Rails' Model-View-Controller layout. Controllers are the central hub: they receive requests, run the business logic, and delegate. When an inquiry is created, a controller calls the model API over HTTP using the Faraday gem, which handles the multipart file upload and parses the JSON similarity response. Views are ERB templates rendered with Bootstrap for a responsive, mobile-friendly UI.
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/rails-architecture.png"
+  alt="Ruby on Rails application architecture: browser, web server, Rails framework with routing, view, model, and database"
+  caption="The Rails stack: web server, routing, MVC, and the PostgreSQL database."
+/>
+
+The gems cover the boring parts so I could focus on the domain. **Devise** handles registration, login, password recovery, and email confirmation. **Rolify** manages role-based access control, assigning a default role on sign-up and gating admin routes. **Active Storage** manages uploads for profile and inquiry images.
+
+**Persistence.** Everything lives in PostgreSQL across seven tables: `users` (email, encrypted password, Devise authentication fields), `profiles` (name, date of birth, gender, nationality, disappearance details), `inquiries` (date, city, country of the sighting, the model's similarity score, verification status), `roles` and the `users_roles` join table for the many-to-many role assignment, plus Active Storage's `attachments` and `blobs` tables for the files themselves.
+
+<ProjectFigure
+  src="/projects/age-invariant-face-recognition/db-schema.png"
+  alt="Database schema diagram showing users, profiles, inquiries, roles, users_roles, and Active Storage tables with their relations"
+  caption="PostgreSQL schema: users, profiles, inquiries, roles, and Active Storage, with the relations between them."
+/>
+
+**Deployment.** The app deploys on Heroku. A GitHub integration gives continuous deployment: every push to the main branch triggers a build, and migrations run automatically against Heroku's managed PostgreSQL, which provides backups and high availability out of the box. The app runs on dynos that scale horizontally with traffic, deployments roll out with zero downtime through a staging pass, and Heroku's logging and monitoring let me watch performance and debug in production.
 
 ## Links
 

@@ -2,8 +2,8 @@
 title: "SNOOD: Surplus Food Marketplace"
 date: "2022-05-01"
 technologies: ["react", "nodejs", "postgres"]
-summary: "Full-stack surplus food marketplace: PoliHackathon 2022 web winner, built with local partners, but did not scale further due to stronger competition."
-description: "End-of-day surplus ordering, partner analytics, and tiered subscriptions. Won PoliHackathon 2022, then lost ground to larger competitors in the same space."
+summary: "Full-stack food-waste marketplace that won PoliHackathon 2022 and grew from a 48-hour prototype into real orders with local restaurants."
+description: "End-of-day surplus ordering, restaurant analytics, and tiered subscriptions: React, Node.js, PostgreSQL."
 image: "/projects/snood/brand.jpg"
 imageAlt: "SNOOD brand mark with food photography in the logo and the tagline Combat risipa consumând"
 featured: false
@@ -11,36 +11,34 @@ order: 4
 highlights:
   - "1st place in the web section (30 teams) at PoliHackathon 2022"
   - "End-of-day surplus ordering with mobile and web pickup flows"
-  - "B2B analytics dashboard and tiered subscription plans for restaurant partners"
-  - "Scaled from hackathon prototype into direct partnerships with local businesses"
-  - "Did not reach long-term scale after larger competitors took the market"
+  - "B2B analytics dashboard and tiered subscriptions for restaurant partners"
+  - "Scaled from a hackathon prototype into direct partnerships and real customer orders"
+  - "Honest post-mortem: demand and product were validated, but larger competitors won the market"
 ---
 
 ## Overview
 
-SNOOD is a **full-stack web marketplace** engineered to tackle food waste by connecting local restaurants, bakeries, and stores with conscious consumers. The platform enables businesses to sell high-quality surplus meals at significant discounts at the end of the day, turning potential waste into additional revenue while offering affordable options to users.
+SNOOD is a full-stack marketplace that lets restaurants, bakeries, and stores sell end-of-day surplus instead of throwing it out. I designed and built the whole platform: a React consumer app, a Node.js + PostgreSQL API, and a partner-facing dashboard. Two sides of the market in one build: customers hunting for discounted meals, and merchants who needed it to be worth their time.
 
-## Problem & opportunity
+## Why it mattered
 
-**Environmental impact:** Over one-third of food goes to waste globally, contributing to roughly **10% of global greenhouse gas emissions**.
+Over a third of food is wasted globally, and roughly 10% of greenhouse-gas emissions come from food that never gets eaten. Restaurants account for about 40% of that waste, not because they're careless, but because daily demand is genuinely hard to predict.
 
-**Commercial waste:** About **40% of wasted food** comes from food service businesses like restaurants and supermarkets, often because daily demand is hard to predict and surplus is treated as unavoidable.
+A survey of 400 local students showed the demand side was ready:
 
-**User demand:** A case study of **400 local students** showed the gap on the consumer side:
-
-- **75%** struggle to maintain a balanced diet on a budget
+- **75%** struggle to keep a balanced diet on a budget
 - **97%** regularly eat reheated meals
-- **60%** are eager to pick up discounted orders in person
+- **60%** would happily pick up discounted orders in person
 
-SNOOD sat at the intersection of those three forces: waste on the supply side, budget pressure on the demand side, and a pickup model students were already willing to use.
+The intersection was real: waste on one side, budget pressure on the other, and a pickup model people already told us they'd use.
 
-## Key features & solutions
+## What I built
 
-**End-of-day surplus ordering:** Users browse discounted local meals, place orders through the mobile and web UI, and pick them up before closing time.
+**End-of-day surplus ordering.** Customers browse nearby partners, reserve discounted meals, and pick them up before closing, on mobile and web.
 
-**B2B analytics dashboard:** Unlike many existing platforms at the time, SNOOD gave restaurant partners **monthly analytics** on daily waste and order trends, so they could adjust purchasing and cooking volumes over time instead of guessing.
+**B2B analytics dashboard.** Most food-saving platforms at the time just listed discounts. I gave restaurant partners monthly breakdowns of waste and order trends, so they could adjust purchasing and cooking volumes instead of guessing. The data was the differentiator.
 
-**Tiered subscription model:** Flexible monetization for business partners, with **Free, Green, and Sustainable** plans that unlock deeper long-term waste reduction insights as partners grow with the platform.
+**Tiered subscriptions.** Free, Green, and Sustainable plans gave partners a path from "try it" to "pay for deeper waste-reduction insights": a real revenue model instead of a free-for-all.
 
 ## Product
 
@@ -68,14 +66,14 @@ SNOOD sat at the intersection of those three forces: waste on the supply side, b
   caption="Order flow: restaurant profile, discounted menu item, checkout, and confirmation."
 />
 
-## Achievements & scale
+## Results
 
-**1st place winner in the web section** (out of 30 competing teams) at **PoliHackathon 2022**.
+**1st place in the web section** (30 teams) at PoliHackathon 2022.
 
-The project was designed and built as an **end-to-end prototype** under hackathon time pressure, then grew into **direct partnerships with local businesses** and real customer orders.
+From a 48-hour prototype, SNOOD moved into **direct partnerships with local businesses and real customer orders**. The product worked: people actually used the pipeline between waste and a discounted meal.
 
-It did not fully complete as a long-term product. SNOOD eventually lost ground to larger competitors already operating in the same space, including [bonapp.eco](https://bonapp.eco/) and [Munch](https://munch.eco/en/), who had more distribution, brand recognition, and resources to win the market.
+It didn't become the long-term winner. bonapp.eco and Munch had more distribution, brand recognition, and funding, and they took the market. I'd call it a useful failure: the demand, product, and tech were validated. The go-to-market wasn't, and at hackathon scale it was never going to be.
 
 ## What I'd do differently
 
-I would narrow the initial wedge even further: one city, one merchant category, one repeatable pickup flow, before expanding feature surface area or subscription tiers.
+One city, one merchant category, one repeatable pickup flow. Sharpen the wedge before adding feature surface area or subscription tiers.

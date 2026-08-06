@@ -42,7 +42,7 @@ html[data-theme="dark"] {
 }
 
 /* ---------------------------------- */
-/* Base — Lynn body stack, weight 300  */
+/* Base: Lynn body stack, weight 300  */
 /* ---------------------------------- */
 
 body {
@@ -379,7 +379,7 @@ html[data-theme="dark"] .blog-page__content .prose code:not(pre code) {
   --blog-ink-dark: #e6edf3;
 }
 
-/* Blog home — one bg token on html, painted through every layer (no flash on theme toggle) */
+/* Blog home: one bg token on html, painted through every layer (no flash on theme toggle) */
 html:has(.blog-home),
 html:has(.blog-page-shell) {
   --blog-page-bg: var(--blog-bg-light);
@@ -455,7 +455,7 @@ html[data-theme="dark"] .blog-home {
   gap: clamp(0.5rem, 2vh, 1.5rem);
 }
 
-/* Mode switch — straight, static (no hover movement) */
+/* Mode switch: straight, static (no hover movement) */
 .blog-home__mode,
 .blog-page__mode.blog-nav__mode {
   --hover-x: 0;
@@ -516,7 +516,7 @@ html[data-theme="dark"] .blog-home {
     z-index 0s linear 220ms;
 }
 
-/* Lift + sideways nudge + extra wiggle — touch, keyboard, fine-pointer hover */
+/* Lift + sideways nudge + extra wiggle: touch, keyboard, fine-pointer hover */
 .blog-nav__item:is(:active, :focus-visible),
 .blog-nav__mode:not(.blog-home__mode):is(:active, :focus-visible),
 .blog-nav__mode:not(.blog-home__mode).blog-nav__mode--pressed {
@@ -857,7 +857,7 @@ html[data-theme="dark"] .blog-home {
   }
 }
 
-/* ---- Desktop (≥ 900px) — 7 equal columns, single row ---- */
+/* ---- Desktop (≥ 900px): 7 equal columns, single row ---- */
 @media (min-width: 900px) {
   .blog-home {
     --blog-icon-h: clamp(4.5rem, 8.5vw, 11.5rem);
@@ -986,7 +986,7 @@ html[data-theme="dark"] .blog-page {
   display: none;
 }
 
-/* Inner-page nav — label above icon, straight, lift on hover (no rotation) */
+/* Inner-page nav: label above icon, straight, lift on hover (no rotation) */
 .blog-page-nav__item,
 .blog-page__mode.blog-nav__mode {
   --hover-x: 4px;

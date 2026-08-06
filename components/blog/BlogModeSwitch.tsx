@@ -21,7 +21,7 @@ function getServerSnapshot() {
   return false;
 }
 
-/** Figma light-switch illustration — toggles site theme on click. */
+/** Figma light-switch illustration, toggles site theme on click. */
 export function BlogModeSwitch({ className = "" }: { className?: string }) {
   const isDark = useSyncExternalStore(subscribe, getSnapshot, getServerSnapshot);
   const [pressed, setPressed] = useState(false);

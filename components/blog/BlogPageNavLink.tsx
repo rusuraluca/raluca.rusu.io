@@ -9,7 +9,7 @@ type BlogPageNavLinkProps = {
   children: ReactNode;
 };
 
-/** Inner-page nav link — icon on top, label below, no rest rotation. */
+/** Inner-page nav link: icon on top, label below, no rest rotation. */
 export function BlogPageNavLink({
   href,
   label,

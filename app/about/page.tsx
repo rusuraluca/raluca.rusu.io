@@ -28,7 +28,7 @@ const MEDIA_TYPE_LABELS: Record<MediaItemType, string> = {
   news: "News",
 };
 
-/** Add talks and press links here — rendered newest to oldest. */
+/** Add talks and press links here, rendered newest to oldest. */
 const talksAndNews: TalkOrNewsItem[] = [
   {
     type: "news",

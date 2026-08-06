@@ -54,5 +54,9 @@
   "grpc": {
     "color": "#3a0ca3",
     "label": "gRPC"
+  },
+  "pytorch": {
+    "color": "#ee4c2c",
+    "label": "pytorch"
   }
 }

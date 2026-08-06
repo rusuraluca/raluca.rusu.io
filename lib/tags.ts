@@ -1,7 +1,7 @@
 import fs from "node:fs";
 import path from "node:path";
 
-/** Site palette — used as fallbacks for tags without a custom color. */
+/** Site palette, used as fallbacks for tags without a custom color. */
 const TAG_PALETTE = [
   "#4361ee",
   "#7209b7",

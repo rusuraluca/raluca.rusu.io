@@ -2,7 +2,7 @@
 title: "Highway61: Senior Audio-Conferencing Platform"
 date: "2020-06-01"
 technologies: ["react", "nodejs", "express", "grpc"]
-summary: "Online chat community for people over 50: topic-based audio rooms, dial-in access, and a minimalist UI built to scale. Featured in The New York Times."
+summary: "Audio-first community for people over 50: topic rooms, dial-in, and mobile join on a gRPC microservices stack. Featured in The New York Times."
 description: "Senior-focused platform for weekly events and group audio chats, with mobile join, dial-in support, and gRPC microservices on Express and React."
 image: "/projects/highway61.jpg"
 imageAlt: "Highway61 homepage showing free chat rooms for people over 50 to learn, support, and engage with one another"
@@ -19,34 +19,24 @@ links:
 
 ## Overview
 
-Highway61 is an **online chat community for seniors**. The platform is built mainly for people **over 50**, giving them a way to connect with others, learn new things, and stay socially engaged.
+Highway61 is an audio-first community for people over 50: topic-based chat rooms and weekly events where you can listen in, or talk when you're ready. During COVID-19 that meant an elderly person living alone could hear a friendly voice without wrestling with video-call software.
 
-There are **weekly events and chat rooms on different topics** that users can join. During COVID-19, that mattered even more: many elderly people were at home alone, without family or friends nearby, and needed a low-friction way to hear a friendly voice and talk about something that interested them.
+I worked on the React web app and the Express/Node backend, and helped move the service layer to gRPC microservices as the community grew.
 
-## Problem
+## Why audio
 
-During the first COVID-19 lockdowns, isolation became as painful as the lockdowns themselves. Many seniors lived alone and could not rely on in-person visits or complicated video tools.
+The pandemic made isolation as painful as the lockdowns themselves. Most of our users' digital reference point was Facebook: familiar patterns, minimal steps, no assumption of technical confidence. Video meant camera anxiety and bandwidth problems; audio rooms meant showing up with a phone. Dial-in and mobile join weren't nice-to-haves, they were the product.
 
-The product had to work for people whose main digital reference point was something like **Facebook**: familiar patterns, minimal steps, and no assumption of technical confidence. Audio-only group rooms fit better than video: less camera anxiety, less bandwidth pressure, and more focus on conversation.
+## What I built
 
-## Approach
-
-We built Highway61 **from scratch** with room to **scale as the community grew**. The main audience was always users above 50, so every product decision started from accessibility and clarity:
-
-- **Minimalist interface:** fast to understand, easy to use, even for people without technical knowledge
-- **Topic-based rooms:** users browse events and discussions, then join when something resonates
-- **Mobile join:** a flow that lets people participate using **only a mobile phone**
-- **Dial-in access:** for users who cannot join from a browser, we added **dial-in functionality** through Turbobridge
-
-Design borrowed cues from platforms seniors already knew: obvious labels, large actions, and a homepage that made the next step clear ("join a discussion") instead of hiding it behind settings or menus.
+- **Minimalist UI:** obvious labels, large actions, and a homepage where the next step ("join a discussion") isn't hidden behind menus
+- **Topic-based rooms:** browse events and discussions, join when something resonates
+- **Mobile join:** full participation using only a phone
+- **Dial-in via Turbobridge:** phone-only users reach the same rooms as browser and mobile participants
 
 ## Architecture
 
-As usage grew, we helped implement a **gRPC architecture based on microservices** so the platform could handle more rooms, more concurrent audio sessions, and more users without rewriting the core product.
-
-**Audio streaming** used the **Agora SDK**. **Dial-in** went through **Turbobridge**, so phone-only users could still reach the same discussions as browser and mobile participants.
-
-**Tech stack:**
+As concurrent sessions grew, we moved to a **gRPC microservices architecture** so more rooms and more audio sessions didn't mean rewriting the core product.
 
 - **Backend:** Express (Node.js)
 - **Web app:** React
@@ -54,15 +44,11 @@ As usage grew, we helped implement a **gRPC architecture based on microservices*
 - **Dial-in:** Turbobridge
 - **Services:** gRPC microservices
 
-## Recognition
-
-The work was highlighted by [*The New York Times*](https://www.nytimes.com/2020/10/07/business/retirement/pandemic-life-seniors.html) in coverage of how seniors adapted to pandemic isolation.
-
-Highway61 was also trusted by senior centers and aging agencies across the US, including community programs that needed a proven way to keep members connected remotely.
-
 ## Outcome
 
-Highway61 became a practical social layer for seniors: a place to join a room, listen in, and talk when ready. It reinforced a design principle I still use today: when the audience is non-technical, the interface should feel obvious on first visit, and the hard engineering should stay invisible behind it.
+Covered by [*The New York Times*](https://www.nytimes.com/2020/10/07/business/retirement/pandemic-life-seniors.html) in their pandemic coverage of seniors, and trusted by senior centers and aging agencies across the US to keep members connected remotely.
+
+The design lesson I still carry: when your audience is non-technical, the interface should feel obvious on the first visit, and the hard engineering stays invisible behind it.
 
 ## Recommendation
 

@@ -41,10 +41,10 @@ npx tsx scripts/tag.ts set career "#f72585" "Career"
 
 Site palette suggestions:
 
-- `#4361ee` — electric sapphire
-- `#7209b7` — indigo bloom
-- `#f72585` — neon pink
-- `#4cc9f0` — sky aqua
-- `#3a0ca3` — vivid royal
+- `#4361ee`: electric sapphire
+- `#7209b7`: indigo bloom
+- `#f72585`: neon pink
+- `#4cc9f0`: sky aqua
+- `#3a0ca3`: vivid royal
 
 Tags used in articles but missing from `tags.json` still render with an automatic fallback color.
